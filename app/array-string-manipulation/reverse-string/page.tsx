@@ -1,12 +1,19 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
+import SectionBox from "@/components/SectionBox";
+import ExampleBox from "@/components/ExampleBox";
+import Input from "@/components/Input";
+import Button from "@/components/Button";
+import Typography from "@/components/Typography";
+import List, { ListItem } from "@/components/List";
+import CodeBlock from "@/components/CodeBlock";
 
 export default function ReverseString() {
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState('');
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
 
   const reverseString = (str: string) => {
-    return str.split('').reverse().join('');
+    return str.split("").reverse().join("");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -14,71 +21,71 @@ export default function ReverseString() {
     setResult(reverseString(input));
   };
 
+  const jsSolution = `function reverseString(str) {
+  return str.split('').reverse().join('');
+}`;
+
+  const tsSolution = `function reverseString(str: string): string {
+  return str.split('').reverse().join('');
+}`;
+
   return (
     <div className="min-h-screen p-8">
       <main className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Reverse a String</h1>
-        
-        <div className="space-y-8">
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Problem Description</h2>
-            <p className="mb-4">
-              Write a function that takes a string as input and returns the string reversed.
-            </p>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded">
-              <h3 className="font-semibold mb-2">Example:</h3>
-              <p>Input: "hello"</p>
-              <p>Output: "olleh"</p>
-            </div>
-          </section>
+        <Typography variant="h1">Reverse a String</Typography>
 
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Try it out</h2>
+        <div className="space-y-8">
+          <SectionBox title="Problem Description">
+            <Typography className="mb-4">
+              Write a function that takes a string as input and returns the
+              string reversed.
+            </Typography>
+            <ExampleBox input="hello" output="olleh" />
+          </SectionBox>
+
+          <SectionBox title="Try it out">
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="input" className="block mb-2">Enter a string:</label>
-                <input
-                  type="text"
-                  id="input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-                  placeholder="Enter a string to reverse"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-              >
-                Reverse
-              </button>
+              <Input
+                id="input"
+                label="Enter a string:"
+                value={input}
+                onChange={setInput}
+                placeholder="Enter a string to reverse"
+              />
+              <Button type="submit">Reverse</Button>
             </form>
             {result && (
               <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                <p className="font-semibold">Result:</p>
-                <p>{result}</p>
+                <Typography variant="h3">Result:</Typography>
+                <Typography>{result}</Typography>
               </div>
             )}
-          </section>
+          </SectionBox>
 
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Solution</h2>
-            <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded overflow-x-auto">
-              <code>{`function reverseString(str) {
-  return str.split('').reverse().join('');
-}`}</code>
-            </pre>
-            <div className="mt-4">
-              <h3 className="font-semibold mb-2">Explanation:</h3>
-              <ol className="list-decimal list-inside space-y-2">
-                <li>Split the string into an array of characters using <code>split('')</code></li>
-                <li>Reverse the array using <code>reverse()</code></li>
-                <li>Join the array back into a string using <code>join('')</code></li>
-              </ol>
+          <SectionBox title="Solution">
+            <div className="space-y-4">
+              <CodeBlock jsCode={jsSolution} tsCode={tsSolution} />
             </div>
-          </section>
+            <div className="mt-4">
+              <Typography variant="h3">Explanation:</Typography>
+              <List type="ordered">
+                <ListItem>
+                  Split the string into an array of characters using{" "}
+                  <Typography variant="code">split(&apos;&apos;)</Typography>
+                </ListItem>
+                <ListItem>
+                  Reverse the array using{" "}
+                  <Typography variant="code">reverse()</Typography>
+                </ListItem>
+                <ListItem>
+                  Join the array back into a string using{" "}
+                  <Typography variant="code">join(&apos;&apos;)</Typography>
+                </ListItem>
+              </List>
+            </div>
+          </SectionBox>
         </div>
       </main>
     </div>
   );
-} 
+}
