@@ -61,6 +61,10 @@ export default function Header() {
           path: "/array-string-manipulation/reverse-string",
         },
         {
+          name: "Check for Anagram",
+          path: "/array-string-manipulation/check-anagram",
+        },
+        {
           name: "Array Methods",
           path: "/array-string-manipulation/array-methods",
         },
