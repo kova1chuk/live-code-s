@@ -30,45 +30,64 @@ export default function ReverseString() {
 }`;
 
   return (
-    <div className="min-h-screen p-8">
-      <main className="max-w-4xl mx-auto">
-        <Typography variant="h1">Reverse a String</Typography>
+    <div className="p-4 sm:p-6 md:p-8">
+      <Typography
+        variant="h2"
+        className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold"
+      >
+        Reverse a String
+      </Typography>
 
-        <div className="space-y-8">
-          <SectionBox title="Problem Description">
-            <Typography className="mb-4">
+      <div className="space-y-6 sm:space-y-8">
+        <SectionBox title="Problem Description">
+          <div className="space-y-4">
+            <Typography className="text-base sm:text-lg">
               Write a function that takes a string as input and returns the
               string reversed.
             </Typography>
             <ExampleBox input="hello" output="olleh" />
-          </SectionBox>
+          </div>
+        </SectionBox>
 
-          <SectionBox title="Try it out">
+        <SectionBox title="Try it out">
+          <div className="space-y-4">
             <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                id="input"
-                label="Enter a string:"
-                value={input}
-                onChange={setInput}
-                placeholder="Enter a string to reverse"
-              />
-              <Button type="submit">Reverse</Button>
+              <div className="max-w-md">
+                <Input
+                  id="input"
+                  label="Enter a string:"
+                  value={input}
+                  onChange={setInput}
+                  placeholder="Enter a string to reverse"
+                />
+              </div>
+              <Button type="submit" className="w-full sm:w-auto">
+                Reverse
+              </Button>
             </form>
             {result && (
-              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                <Typography variant="h3">Result:</Typography>
-                <Typography>{result}</Typography>
+              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <Typography variant="h3" className="text-lg font-semibold mb-2">
+                  Result:
+                </Typography>
+                <Typography className="text-base sm:text-lg break-all">
+                  {result}
+                </Typography>
               </div>
             )}
-          </SectionBox>
+          </div>
+        </SectionBox>
 
-          <SectionBox title="Solution">
+        <SectionBox title="Solution">
+          <div className="space-y-6">
             <div className="space-y-4">
               <CodeBlock jsCode={jsSolution} tsCode={tsSolution} />
             </div>
-            <div className="mt-4">
-              <Typography variant="h3">Explanation:</Typography>
-              <List type="ordered">
+            <div className="space-y-4">
+              <Typography variant="h3" className="text-lg font-semibold">
+                Explanation:
+              </Typography>
+              <List type="ordered" className="space-y-2">
                 <ListItem>
                   Split the string into an array of characters using{" "}
                   <Typography variant="code">split(&apos;&apos;)</Typography>
@@ -83,9 +102,9 @@ export default function ReverseString() {
                 </ListItem>
               </List>
             </div>
-          </SectionBox>
-        </div>
-      </main>
+          </div>
+        </SectionBox>
+      </div>
     </div>
   );
 }
