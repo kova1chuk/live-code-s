@@ -1,122 +1,347 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
+import SectionBox from "@/components/SectionBox";
+import Input from "@/components/Input";
+import Button from "@/components/Button";
+import Typography from "@/components/Typography";
+import List, { ListItem } from "@/components/List";
+import CodeBlock from "@/components/CodeBlock";
+import ExampleRow from "@/components/ExampleRow";
 
 export default function FlattenArray() {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [result, setResult] = useState<number[]>([]);
+  const [error, setError] = useState("");
+  const [examples] = useState([
+    {
+      input: "[1, [2, 3], [4, [5, 6]]]",
+      output: "[1, 2, 3, 4, 5, 6]",
+    },
+    {
+      input: "[[1, 2], [3, 4], [5, [6, 7, [8, 9]]]]",
+      output: "[1, 2, 3, 4, 5, 6, 7, 8, 9]",
+    },
+    {
+      input: "[1, 2, 3, 4, 5]",
+      output: "[1, 2, 3, 4, 5]",
+    },
+  ]);
 
-  const flattenArray = (arr: any[]): number[] => {
-    return arr.reduce((flat: number[], item: any) => {
+  type NestedArray = (number | NestedArray)[];
+
+  const flattenArray = (arr: NestedArray): number[] => {
+    return arr.reduce((flat: number[], item: number | NestedArray) => {
       return flat.concat(Array.isArray(item) ? flattenArray(item) : item);
     }, []);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     try {
       const array = JSON.parse(input);
+      if (!Array.isArray(array)) {
+        throw new Error("Input must be an array");
+      }
       setResult(flattenArray(array));
-    } catch (error) {
-      alert('Please enter a valid JSON array');
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Please enter a valid JSON array"
+      );
     }
   };
 
-  return (
-    <div className="min-h-screen p-8">
-      <main className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Flatten Nested Array</h1>
-        
-        <div className="space-y-8">
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Problem Description</h2>
-            <p className="mb-4">
-              Given a nested array of numbers, flatten it into a single-level array.
-            </p>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded">
-              <h3 className="font-semibold mb-2">Example:</h3>
-              <p>Input: [1, [2, 3], [4, [5, 6]]]</p>
-              <p>Output: [1, 2, 3, 4, 5, 6]</p>
-            </div>
-          </section>
+  const handleExampleClick = (example: { input: string; output: string }) => {
+    setInput(example.input);
+    try {
+      const array = JSON.parse(example.input);
+      setResult(flattenArray(array));
+      setError("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error processing example");
+    }
+  };
 
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Try it out</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="input" className="block mb-2">Enter nested array (JSON format):</label>
-                <input
-                  type="text"
-                  id="input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-                  placeholder='[1, [2, 3], [4, [5, 6]]]'
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-              >
-                Flatten Array
-              </button>
-            </form>
-            {result.length > 0 && (
-              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                <p className="font-semibold">Result:</p>
-                <p>[{result.join(', ')}]</p>
-              </div>
-            )}
-          </section>
-
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Solution</h2>
-            <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded overflow-x-auto">
-              <code>{`// Method 1: Using reduce and recursion
+  const jsSolution = `// Method 1: Using reduce and recursion
 function flattenArray(arr) {
   return arr.reduce((flat, item) => {
     return flat.concat(Array.isArray(item) ? flattenArray(item) : item);
   }, []);
 }
 
-// Method 2: Using flat() method (ES2019)
+// Method 2: Using flat() method (ES2019+)
 function flattenArray(arr) {
   return arr.flat(Infinity);
 }
 
-// Method 3: Using toString() and split()
+// Method 3: Using stack (iterative approach)
 function flattenArray(arr) {
-  return arr.toString().split(',').map(Number);
-}`}</code>
-            </pre>
-            <div className="mt-4">
-              <h3 className="font-semibold mb-2">Explanation:</h3>
-              <ol className="list-decimal list-inside space-y-2">
-                <li>Method 1 (Using reduce and recursion):
-                  <ul className="list-disc list-inside ml-4 mt-2">
-                    <li>Recursively flatten nested arrays</li>
-                    <li>Works with any level of nesting</li>
-                    <li>Time Complexity: O(n), Space Complexity: O(n)</li>
-                  </ul>
-                </li>
-                <li>Method 2 (Using flat()):
-                  <ul className="list-disc list-inside ml-4 mt-2">
-                    <li>Uses built-in Array.flat() method</li>
-                    <li>Infinity parameter flattens all levels</li>
-                    <li>Time Complexity: O(n), Space Complexity: O(n)</li>
-                  </ul>
-                </li>
-                <li>Method 3 (Using toString()):
-                  <ul className="list-disc list-inside ml-4 mt-2">
-                    <li>Converts array to string and splits</li>
-                    <li>Only works with numbers</li>
-                    <li>Time Complexity: O(n), Space Complexity: O(n)</li>
-                  </ul>
-                </li>
-              </ol>
+  const stack = [...arr];
+  const result = [];
+  
+  while (stack.length) {
+    const item = stack.pop();
+    if (Array.isArray(item)) {
+      stack.push(...item);
+    } else {
+      result.unshift(item);
+    }
+  }
+  
+  return result;
+}
+
+// Method 4: Using generator function
+function* flattenGenerator(arr) {
+  for (const item of arr) {
+    if (Array.isArray(item)) {
+      yield* flattenGenerator(item);
+    } else {
+      yield item;
+    }
+  }
+}
+
+function flattenArray(arr) {
+  return [...flattenGenerator(arr)];
+}`;
+
+  const tsSolution = `// Method 1: Using reduce and recursion
+function flattenArray(arr: any[]): number[] {
+  return arr.reduce((flat: number[], item: any) => {
+    return flat.concat(Array.isArray(item) ? flattenArray(item) : item);
+  }, []);
+}
+
+// Method 2: Using flat() method (ES2019+)
+function flattenArray(arr: any[]): number[] {
+  return arr.flat(Infinity);
+}
+
+// Method 3: Using stack (iterative approach)
+function flattenArray(arr: any[]): number[] {
+  const stack: any[] = [...arr];
+  const result: number[] = [];
+  
+  while (stack.length) {
+    const item = stack.pop();
+    if (Array.isArray(item)) {
+      stack.push(...item);
+    } else {
+      result.unshift(item);
+    }
+  }
+  
+  return result;
+}
+
+// Method 4: Using generator function
+function* flattenGenerator(arr: any[]): Generator<number> {
+  for (const item of arr) {
+    if (Array.isArray(item)) {
+      yield* flattenGenerator(item);
+    } else {
+      yield item;
+    }
+  }
+}
+
+function flattenArray(arr: any[]): number[] {
+  return [...flattenGenerator(arr)];
+}`;
+
+  return (
+    <div className="p-4 sm:p-6 md:p-8">
+      <Typography
+        variant="h2"
+        className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold"
+      >
+        Flatten Nested Array
+      </Typography>
+
+      <div className="space-y-6 sm:space-y-8">
+        <SectionBox title="Problem Description">
+          <div className="space-y-4">
+            <Typography className="text-base sm:text-lg">
+              Write a function that takes a nested array of numbers as input and
+              returns a flattened version of that array. The input array can
+              have multiple levels of nesting, and the output should be a
+              single-level array containing all the numbers in the order they
+              appear.
+            </Typography>
+            <div className="space-y-3">
+              <Typography variant="h3" className="text-lg font-semibold">
+                Examples:
+              </Typography>
+              <div className="flex flex-col gap-4">
+                {examples.map((example, index) => (
+                  <ExampleRow
+                    key={index}
+                    input={example.input}
+                    output={example.output}
+                    onClick={() => handleExampleClick(example)}
+                  />
+                ))}
+              </div>
             </div>
-          </section>
-        </div>
-      </main>
+          </div>
+        </SectionBox>
+
+        <SectionBox title="Try it out">
+          <div className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="max-w-md">
+                <Input
+                  id="input"
+                  label="Enter nested array (JSON format):"
+                  value={input}
+                  onChange={setInput}
+                  placeholder="[1, [2, 3], [4, [5, 6]]]"
+                />
+              </div>
+              <Button type="submit" className="w-full sm:w-auto">
+                Flatten Array
+              </Button>
+            </form>
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg">
+                <Typography>{error}</Typography>
+              </div>
+            )}
+            {result.length > 0 && !error && (
+              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <Typography variant="h3" className="text-lg font-semibold mb-2">
+                  Result:
+                </Typography>
+                <Typography className="text-base sm:text-lg break-all">
+                  [{result.join(", ")}]
+                </Typography>
+              </div>
+            )}
+          </div>
+        </SectionBox>
+
+        <SectionBox title="Solution">
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <CodeBlock jsCode={jsSolution} tsCode={tsSolution} />
+            </div>
+            <div className="space-y-4">
+              <Typography variant="h3" className="text-lg font-semibold">
+                Explanation:
+              </Typography>
+              <List type="ordered" className="space-y-2">
+                <ListItem>
+                  Method 1 (Using reduce and recursion):
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>Use reduce to build the flattened array</ListItem>
+                    <ListItem>
+                      For each item, check if it&apos;s an array
+                    </ListItem>
+                    <ListItem>If it is, recursively flatten it</ListItem>
+                    <ListItem>If not, add it to the result</ListItem>
+                  </List>
+                </ListItem>
+                <ListItem>
+                  Method 2 (Using flat()):
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>Use the built-in flat() method</ListItem>
+                    <ListItem>
+                      Pass Infinity to flatten all nested levels
+                    </ListItem>
+                    <ListItem>
+                      Simple but only available in modern browsers
+                    </ListItem>
+                  </List>
+                </ListItem>
+                <ListItem>
+                  Method 3 (Using stack):
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>
+                      Use a stack to handle nested arrays iteratively
+                    </ListItem>
+                    <ListItem>
+                      Pop items from stack and check if they&apos;re arrays
+                    </ListItem>
+                    <ListItem>If array, push its elements to stack</ListItem>
+                    <ListItem>If not, add to result</ListItem>
+                  </List>
+                </ListItem>
+                <ListItem>
+                  Method 4 (Using generator):
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>
+                      Use a generator function to yield values
+                    </ListItem>
+                    <ListItem>Recursively yield from nested arrays</ListItem>
+                    <ListItem>
+                      Spread the generator result into an array
+                    </ListItem>
+                  </List>
+                </ListItem>
+              </List>
+              <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <Typography variant="h3" className="text-lg font-semibold mb-2">
+                  Time & Space Complexity:
+                </Typography>
+                <List type="unordered" className="space-y-1">
+                  <ListItem>
+                    Methods 1 & 2 (Recursive & flat()):
+                    <List type="unordered" className="ml-4">
+                      <ListItem>
+                        <Typography variant="code">
+                          Time Complexity: O(n)
+                        </Typography>{" "}
+                        - Visit each element once
+                      </ListItem>
+                      <ListItem>
+                        <Typography variant="code">
+                          Space Complexity: O(d)
+                        </Typography>{" "}
+                        - Where d is the maximum depth of nesting
+                      </ListItem>
+                    </List>
+                  </ListItem>
+                  <ListItem>
+                    Method 3 (Stack):
+                    <List type="unordered" className="ml-4">
+                      <ListItem>
+                        <Typography variant="code">
+                          Time Complexity: O(n)
+                        </Typography>{" "}
+                        - Process each element once
+                      </ListItem>
+                      <ListItem>
+                        <Typography variant="code">
+                          Space Complexity: O(n)
+                        </Typography>{" "}
+                        - For the stack and result array
+                      </ListItem>
+                    </List>
+                  </ListItem>
+                  <ListItem>
+                    Method 4 (Generator):
+                    <List type="unordered" className="ml-4">
+                      <ListItem>
+                        <Typography variant="code">
+                          Time Complexity: O(n)
+                        </Typography>{" "}
+                        - Yield each element once
+                      </ListItem>
+                      <ListItem>
+                        <Typography variant="code">
+                          Space Complexity: O(d)
+                        </Typography>{" "}
+                        - Where d is the maximum depth of nesting
+                      </ListItem>
+                    </List>
+                  </ListItem>
+                </List>
+              </div>
+            </div>
+          </div>
+        </SectionBox>
+      </div>
     </div>
   );
-} 
+}

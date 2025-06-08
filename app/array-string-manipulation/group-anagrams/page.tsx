@@ -1,89 +1,52 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
+import SectionBox from "@/components/SectionBox";
+import Typography from "@/components/Typography";
+import Input from "@/components/Input";
+import Button from "@/components/Button";
+import List, { ListItem } from "@/components/List";
+import CodeBlock from "@/components/CodeBlock";
+import ExampleRow from "@/components/ExampleRow";
 
 export default function GroupAnagrams() {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [result, setResult] = useState<string[][]>([]);
+  const [examples] = useState([
+    {
+      input: "eat, tea, tan, ate, nat, bat",
+      output: '[ ["eat", "tea", "ate"], ["tan", "nat"], ["bat"] ]',
+    },
+    {
+      input: "listen, silent, enlist, google, goolge",
+      output: '[ ["listen", "silent", "enlist"], ["google", "goolge"] ]',
+    },
+  ]);
 
   const groupAnagrams = (strs: string[]) => {
     const groups = new Map<string, string[]>();
-    
     for (const str of strs) {
-      const sorted = str.split('').sort().join('');
+      const sorted = str.split("").sort().join("");
       if (!groups.has(sorted)) {
         groups.set(sorted, []);
       }
       groups.get(sorted)!.push(str);
     }
-    
     return Array.from(groups.values());
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const words = input.split(',').map(word => word.trim());
+    const words = input.split(",").map((word) => word.trim());
     setResult(groupAnagrams(words));
   };
 
-  return (
-    <div className="min-h-screen p-8">
-      <main className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Group Anagrams</h1>
-        
-        <div className="space-y-8">
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Problem Description</h2>
-            <p className="mb-4">
-              Given an array of strings, group the anagrams together. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase.
-            </p>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded">
-              <h3 className="font-semibold mb-2">Example:</h3>
-              <p>Input: ["eat", "tea", "tan", "ate", "nat", "bat"]</p>
-              <p>Output: [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]</p>
-            </div>
-          </section>
+  const handleExampleClick = (example: { input: string }) => {
+    setInput(example.input);
+    setResult([]);
+  };
 
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Try it out</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="input" className="block mb-2">Enter words (comma-separated):</label>
-                <input
-                  type="text"
-                  id="input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-                  placeholder="eat, tea, tan, ate, nat, bat"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-              >
-                Group Anagrams
-              </button>
-            </form>
-            {result.length > 0 && (
-              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                <p className="font-semibold mb-2">Result:</p>
-                <div className="space-y-2">
-                  {result.map((group, index) => (
-                    <div key={index} className="p-2 bg-white dark:bg-gray-800 rounded">
-                      Group {index + 1}: [{group.join(', ')}]
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
-
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Solution</h2>
-            <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded overflow-x-auto">
-              <code>{`function groupAnagrams(strs) {
+  const jsSolution = `function groupAnagrams(strs) {
   const groups = new Map();
-  
   for (const str of strs) {
     const sorted = str.split('').sort().join('');
     if (!groups.has(sorted)) {
@@ -91,26 +54,142 @@ export default function GroupAnagrams() {
     }
     groups.get(sorted).push(str);
   }
-  
   return Array.from(groups.values());
-}`}</code>
-            </pre>
-            <div className="mt-4">
-              <h3 className="font-semibold mb-2">Explanation:</h3>
-              <ol className="list-decimal list-inside space-y-2">
-                <li>Create a Map to store groups of anagrams</li>
-                <li>For each string:
-                  <ul className="list-disc list-inside ml-4 mt-2">
-                    <li>Sort its characters to create a key</li>
-                    <li>Add the string to the corresponding group in the Map</li>
-                  </ul>
-                </li>
-                <li>Convert the Map values to an array and return</li>
-              </ol>
+}`;
+
+  const tsSolution = `function groupAnagrams(strs: string[]): string[][] {
+  const groups = new Map<string, string[]>();
+  for (const str of strs) {
+    const sorted = str.split('').sort().join('');
+    if (!groups.has(sorted)) {
+      groups.set(sorted, []);
+    }
+    groups.get(sorted)!.push(str);
+  }
+  return Array.from(groups.values());
+}`;
+
+  return (
+    <div className="p-4 sm:p-6 md:p-8">
+      <Typography
+        variant="h2"
+        className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold"
+      >
+        Group Anagrams
+      </Typography>
+      <div className="space-y-6 sm:space-y-8">
+        <SectionBox title="Problem Description">
+          <div className="space-y-4">
+            <Typography className="text-base sm:text-lg">
+              Given an array of strings, group the anagrams together. An anagram
+              is a word or phrase formed by rearranging the letters of a
+              different word or phrase.
+            </Typography>
+            <div className="space-y-3">
+              <Typography variant="h3" className="text-lg font-semibold">
+                Examples:
+              </Typography>
+              <div className="flex flex-col gap-4">
+                {examples.map((example, index) => (
+                  <ExampleRow
+                    key={index}
+                    input={example.input}
+                    output={example.output}
+                    onClick={() => handleExampleClick(example)}
+                  />
+                ))}
+              </div>
             </div>
-          </section>
-        </div>
-      </main>
+          </div>
+        </SectionBox>
+        <SectionBox title="Try it out">
+          <div className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="max-w-xl">
+                <Input
+                  id="input"
+                  label="Enter words (comma-separated):"
+                  value={input}
+                  onChange={setInput}
+                  placeholder="eat, tea, tan, ate, nat, bat"
+                />
+              </div>
+              <Button type="submit" className="w-full sm:w-auto">
+                Group Anagrams
+              </Button>
+            </form>
+            {result.length > 0 && (
+              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <Typography variant="h3" className="text-lg font-semibold mb-2">
+                  Result:
+                </Typography>
+                <div className="space-y-2">
+                  {result.map((group, index) => (
+                    <div
+                      key={index}
+                      className="p-2 bg-white dark:bg-gray-800 rounded"
+                    >
+                      Group {index + 1}: [
+                      {group.map((word, i) => (
+                        <span key={i} className="inline-block mx-1 font-mono">
+                          {word}
+                        </span>
+                      ))}
+                      ]
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </SectionBox>
+        <SectionBox title="Solution">
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <CodeBlock jsCode={jsSolution} tsCode={tsSolution} />
+            </div>
+            <div className="space-y-4">
+              <Typography variant="h3" className="text-lg font-semibold">
+                Explanation:
+              </Typography>
+              <List type="ordered" className="space-y-2">
+                <ListItem>Create a Map to store groups of anagrams</ListItem>
+                <ListItem>
+                  For each string:
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>Sort its characters to create a key</ListItem>
+                    <ListItem>
+                      Add the string to the corresponding group in the Map
+                    </ListItem>
+                  </List>
+                </ListItem>
+                <ListItem>
+                  Convert the Map values to an array and return
+                </ListItem>
+              </List>
+              <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <Typography variant="h3" className="text-lg font-semibold mb-2">
+                  Time & Space Complexity:
+                </Typography>
+                <List type="unordered" className="space-y-1">
+                  <ListItem>
+                    <Typography variant="code">
+                      Time Complexity: O(n * k log k)
+                    </Typography>{" "}
+                    - n = number of words, k = max word length
+                  </ListItem>
+                  <ListItem>
+                    <Typography variant="code">
+                      Space Complexity: O(n)
+                    </Typography>{" "}
+                    - For storing the groups
+                  </ListItem>
+                </List>
+              </div>
+            </div>
+          </div>
+        </SectionBox>
+      </div>
     </div>
   );
-} 
+}

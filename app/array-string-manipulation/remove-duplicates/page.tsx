@@ -1,9 +1,21 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
+import SectionBox from "@/components/SectionBox";
+import Input from "@/components/Input";
+import Button from "@/components/Button";
+import Typography from "@/components/Typography";
+import List, { ListItem } from "@/components/List";
+import CodeBlock from "@/components/CodeBlock";
+import ExampleRow from "@/components/ExampleRow";
 
 export default function RemoveDuplicates() {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [result, setResult] = useState<number[]>([]);
+  const [examples] = useState([
+    { input: "1, 2, 2, 3, 3, 4, 5, 5", output: "[1, 2, 3, 4, 5]" },
+    { input: "10, 10, 20, 20, 30", output: "[10, 20, 30]" },
+    { input: "1, 1, 1, 1, 1", output: "[1]" },
+  ]);
 
   const removeDuplicates = (nums: number[]) => {
     return [...new Set(nums)];
@@ -11,68 +23,29 @@ export default function RemoveDuplicates() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const numbers = input.split(',').map(num => parseInt(num.trim()));
+    const numbers = input
+      .split(",")
+      .map((num) => parseInt(num.trim()))
+      .filter((num) => !isNaN(num));
     setResult(removeDuplicates(numbers));
   };
 
-  return (
-    <div className="min-h-screen p-8">
-      <main className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Remove Duplicates from Array</h1>
-        
-        <div className="space-y-8">
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Problem Description</h2>
-            <p className="mb-4">
-              Given an array of numbers, remove all duplicates and return a new array with unique values.
-            </p>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded">
-              <h3 className="font-semibold mb-2">Example:</h3>
-              <p>Input: [1, 2, 2, 3, 3, 4, 5, 5]</p>
-              <p>Output: [1, 2, 3, 4, 5]</p>
-            </div>
-          </section>
+  const handleExampleClick = (example: { input: string; output: string }) => {
+    setInput(example.input);
+    const numbers = example.input.split(",").map((num) => parseInt(num.trim()));
+    setResult(removeDuplicates(numbers));
+  };
 
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Try it out</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="input" className="block mb-2">Enter numbers (comma-separated):</label>
-                <input
-                  type="text"
-                  id="input"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-                  placeholder="1, 2, 2, 3, 3, 4, 5, 5"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-              >
-                Remove Duplicates
-              </button>
-            </form>
-            {result.length > 0 && (
-              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                <p className="font-semibold">Result:</p>
-                <p>[{result.join(', ')}]</p>
-              </div>
-            )}
-          </section>
-
-          <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Solution</h2>
-            <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded overflow-x-auto">
-              <code>{`// Method 1: Using Set
+  const jsSolution = `// Method 1: Using Set
 function removeDuplicates(nums) {
   return [...new Set(nums)];
 }
 
 // Method 2: Using filter
 function removeDuplicates(nums) {
-  return nums.filter((num, index) => nums.indexOf(num) === index);
+  return nums.filter((num, index) => 
+    nums.indexOf(num) === index
+  );
 }
 
 // Method 3: Using reduce
@@ -80,35 +53,183 @@ function removeDuplicates(nums) {
   return nums.reduce((unique, num) => 
     unique.includes(num) ? unique : [...unique, num], 
   []);
-}`}</code>
-            </pre>
-            <div className="mt-4">
-              <h3 className="font-semibold mb-2">Explanation:</h3>
-              <ol className="list-decimal list-inside space-y-2">
-                <li>Method 1 (Using Set):
-                  <ul className="list-disc list-inside ml-4 mt-2">
-                    <li>Create a Set from the array (automatically removes duplicates)</li>
-                    <li>Convert back to array using spread operator</li>
-                    <li>Time Complexity: O(n), Space Complexity: O(n)</li>
-                  </ul>
-                </li>
-                <li>Method 2 (Using filter):
-                  <ul className="list-disc list-inside ml-4 mt-2">
-                    <li>Keep only the first occurrence of each number</li>
-                    <li>Time Complexity: O(n²), Space Complexity: O(n)</li>
-                  </ul>
-                </li>
-                <li>Method 3 (Using reduce):
-                  <ul className="list-disc list-inside ml-4 mt-2">
-                    <li>Build a new array with unique values</li>
-                    <li>Time Complexity: O(n²), Space Complexity: O(n)</li>
-                  </ul>
-                </li>
-              </ol>
+}`;
+
+  const tsSolution = `// Method 1: Using Set
+function removeDuplicates(nums: number[]): number[] {
+  return [...new Set(nums)];
+}
+
+// Method 2: Using filter
+function removeDuplicates(nums: number[]): number[] {
+  return nums.filter((num, index) => 
+    nums.indexOf(num) === index
+  );
+}
+
+// Method 3: Using reduce
+function removeDuplicates(nums: number[]): number[] {
+  return nums.reduce((unique: number[], num: number) => 
+    unique.includes(num) ? unique : [...unique, num], 
+  []);
+}`;
+
+  return (
+    <div className="p-4 sm:p-6 md:p-8">
+      <Typography
+        variant="h2"
+        className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold"
+      >
+        Remove Duplicates from Array
+      </Typography>
+
+      <div className="space-y-6 sm:space-y-8">
+        <SectionBox title="Problem Description">
+          <div className="space-y-4">
+            <Typography className="text-base sm:text-lg">
+              Given an array of numbers, write a function that removes all
+              duplicates and returns a new array containing only unique values
+              in the order they first appeared.
+            </Typography>
+            <div className="space-y-3">
+              <Typography variant="h3" className="text-lg font-semibold">
+                Examples:
+              </Typography>
+              <div className="flex flex-col gap-4">
+                {examples.map((example, index) => (
+                  <ExampleRow
+                    key={index}
+                    input={example.input}
+                    output={example.output}
+                    onClick={() => handleExampleClick(example)}
+                  />
+                ))}
+              </div>
             </div>
-          </section>
-        </div>
-      </main>
+          </div>
+        </SectionBox>
+
+        <SectionBox title="Try it out">
+          <div className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="max-w-md">
+                <Input
+                  id="input"
+                  label="Enter numbers (comma-separated):"
+                  value={input}
+                  onChange={setInput}
+                  placeholder="1, 2, 2, 3, 3, 4, 5, 5"
+                />
+              </div>
+              <Button type="submit" className="w-full sm:w-auto">
+                Remove Duplicates
+              </Button>
+            </form>
+            {result.length > 0 && (
+              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <Typography variant="h3" className="text-lg font-semibold mb-2">
+                  Result:
+                </Typography>
+                <Typography className="text-base sm:text-lg">
+                  [{result.join(", ")}]
+                </Typography>
+              </div>
+            )}
+          </div>
+        </SectionBox>
+
+        <SectionBox title="Solution">
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <CodeBlock jsCode={jsSolution} tsCode={tsSolution} />
+            </div>
+            <div className="space-y-4">
+              <Typography variant="h3" className="text-lg font-semibold">
+                Explanation:
+              </Typography>
+              <List type="ordered" className="space-y-2">
+                <ListItem>
+                  Using Set (Method 1):
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>
+                      Create a Set from the array (automatically removes
+                      duplicates)
+                    </ListItem>
+                    <ListItem>
+                      Convert back to array using spread operator
+                    </ListItem>
+                  </List>
+                </ListItem>
+                <ListItem>
+                  Using filter (Method 2):
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>
+                      Keep only elements where their current index matches their
+                      first occurrence
+                    </ListItem>
+                    <ListItem>
+                      Preserves the original order of elements
+                    </ListItem>
+                  </List>
+                </ListItem>
+                <ListItem>
+                  Using reduce (Method 3):
+                  <List type="unordered" className="ml-4 mt-2">
+                    <ListItem>
+                      Build a new array by adding elements only if they
+                      don&apos;t exist yet
+                    </ListItem>
+                    <ListItem>
+                      Maintains order while ensuring uniqueness
+                    </ListItem>
+                  </List>
+                </ListItem>
+              </List>
+              <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <Typography variant="h3" className="text-lg font-semibold mb-2">
+                  Time & Space Complexity:
+                </Typography>
+                <List type="unordered" className="space-y-1">
+                  <ListItem>
+                    Method 1 (Set):
+                    <List type="unordered" className="ml-4">
+                      <ListItem>
+                        <Typography variant="code">
+                          Time Complexity: O(n)
+                        </Typography>{" "}
+                        - Single pass through array
+                      </ListItem>
+                      <ListItem>
+                        <Typography variant="code">
+                          Space Complexity: O(n)
+                        </Typography>{" "}
+                        - For storing unique elements
+                      </ListItem>
+                    </List>
+                  </ListItem>
+                  <ListItem>
+                    Method 2 (filter) and Method 3 (reduce):
+                    <List type="unordered" className="ml-4">
+                      <ListItem>
+                        <Typography variant="code">
+                          Time Complexity: O(n²)
+                        </Typography>{" "}
+                        - Due to includes/indexOf operations
+                      </ListItem>
+                      <ListItem>
+                        <Typography variant="code">
+                          Space Complexity: O(n)
+                        </Typography>{" "}
+                        - For storing unique elements
+                      </ListItem>
+                    </List>
+                  </ListItem>
+                </List>
+              </div>
+            </div>
+          </div>
+        </SectionBox>
+      </div>
     </div>
   );
-} 
+}
