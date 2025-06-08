@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -14,8 +14,23 @@ export default function CodeBlock({
   className = "",
 }: CodeBlockProps) {
   const [activeTab, setActiveTab] = useState<"js" | "ts">("js");
+  const [showCopied, setShowCopied] = useState(false);
   const activeCode = activeTab === "js" ? jsCode : tsCode;
   const language = activeTab === "js" ? "javascript" : "typescript";
+
+  useEffect(() => {
+    if (showCopied) {
+      const timer = setTimeout(() => {
+        setShowCopied(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showCopied]);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(activeCode);
+    setShowCopied(true);
+  };
 
   return (
     <div className={`space-y-2 ${className}`}>
@@ -41,12 +56,19 @@ export default function CodeBlock({
           TypeScript
         </button>
         <div className="flex-1" />
-        <button
-          onClick={() => navigator.clipboard.writeText(activeCode)}
-          className="px-4 py-2 text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
-        >
-          Copy
-        </button>
+        <div className="relative">
+          <button
+            onClick={handleCopy}
+            className="px-4 py-2 text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
+          >
+            Copy
+          </button>
+          {showCopied && (
+            <div className="absolute right-0 -bottom-8 bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg">
+              Copied!
+            </div>
+          )}
+        </div>
       </div>
       <div className="rounded-b overflow-hidden">
         <SyntaxHighlighter

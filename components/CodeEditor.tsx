@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { OnMount, OnChange } from "@monaco-editor/react";
 import Editor from "@monaco-editor/react";
+import * as monaco from "monaco-editor";
 
 interface CodeEditorProps {
   defaultValue?: string;
@@ -25,7 +26,7 @@ export default function CodeEditor({
   className = "",
 }: CodeEditorProps) {
   const [mounted, setMounted] = useState(false);
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   useEffect(() => {
     setMounted(true);

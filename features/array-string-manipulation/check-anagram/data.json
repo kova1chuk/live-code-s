@@ -1,0 +1,152 @@
+{
+  "examples": [
+    { "input": "listen, silent", "output": "true" },
+    { "input": "hello, world", "output": "false" },
+    { "input": "triangle, integral", "output": "true" },
+    { "input": "debit card, bad credit", "output": "true" },
+    { "input": "a gentleman, elegant man", "output": "true" }
+  ],
+  "testCases": [
+    {
+      "input": ["listen", "silent"],
+      "expected": true,
+      "description": "Basic anagram test"
+    },
+    {
+      "input": ["hello", "world"],
+      "expected": false,
+      "description": "Non-anagram test"
+    },
+    {
+      "input": ["debit card", "bad credit"],
+      "expected": true,
+      "description": "Phrase with spaces"
+    },
+    {
+      "input": ["A gentleman", "Elegant man"],
+      "expected": true,
+      "description": "Case-insensitive test"
+    },
+    {
+      "input": ["12345", "54321"],
+      "expected": true,
+      "description": "Numeric anagram"
+    },
+    {
+      "input": ["rail safety", "fairy tales"],
+      "expected": true,
+      "description": "Complex phrase test"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "sort",
+      "label": "Sort and Compare",
+      "description": "Simple but not the most efficient for very long strings",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Normalize strings by converting to lowercase and removing special characters",
+        "Split each string into an array of characters",
+        "Sort both character arrays",
+        "Join the arrays back into strings",
+        "Compare the resulting strings for equality"
+      ],
+      "advantages": [
+        "Simple and easy to understand",
+        "Works with any character set",
+        "Handles repeated characters automatically"
+      ],
+      "disadvantages": [
+        "Not the most efficient due to sorting operation",
+        "Creates new strings/arrays in memory",
+        "Sorting takes O(n log n) time"
+      ],
+      "jsCode": "function isAnagram(str1, str2) {\n  // Remove non-alphanumeric and convert to lowercase\n  str1 = str1.toLowerCase().replace(/[^a-z0-9]/g, '');\n  str2 = str2.toLowerCase().replace(/[^a-z0-9]/g, '');\n  \n  if (str1.length !== str2.length) return false;\n  \n  // Sort both strings and compare\n  return str1.split('').sort().join('') === str2.split('').sort().join('');\n}",
+      "tsCode": "function isAnagram(str1: string, str2: string): boolean {\n  // Remove non-alphanumeric and convert to lowercase\n  str1 = str1.toLowerCase().replace(/[^a-z0-9]/g, '');\n  str2 = str2.toLowerCase().replace(/[^a-z0-9]/g, '');\n  \n  if (str1.length !== str2.length) return false;\n  \n  // Sort both strings and compare\n  return str1.split('').sort().join('') === str2.split('').sort().join('');\n}"
+    },
+    {
+      "id": "frequency",
+      "label": "Character Frequency",
+      "description": "More efficient than sorting, using a Map to count characters",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(k)"
+      },
+      "howItWorks": [
+        "Create a Map to store character frequencies",
+        "Increment counters for characters from first string",
+        "Decrement counters for characters from second string",
+        "Check if all counters are zero at the end"
+      ],
+      "advantages": [
+        "Linear time complexity O(n)",
+        "Can stop early if lengths don't match",
+        "Efficient for strings with many repeated characters"
+      ],
+      "disadvantages": [
+        "Uses extra space for the hash map",
+        "Space complexity depends on character set size"
+      ],
+      "jsCode": "function isAnagram(str1, str2) {\n  // Create a Map to store character frequencies\n  const freq1 = new Map();\n  const freq2 = new Map();\n  \n  // Increment counters for characters from first string\n  for (let char of str1) {\n    freq1.set(char, (freq1.get(char) || 0) + 1);\n  }\n  \n  // Increment counters for characters from second string\n  for (let char of str2) {\n    freq2.set(char, (freq2.get(char) || 0) + 1);\n  }\n  \n  // Check if all counters are zero at the end\n  for (let [char, count] of freq1) {\n    if (freq2.get(char) !== count) return false;\n  }\n  \n  return true;\n}",
+      "tsCode": "function isAnagram(str1: string, str2: string): boolean {\n  // Create a Map to store character frequencies\n  const freq1 = new Map();\n  const freq2 = new Map();\n  \n  // Increment counters for characters from first string\n  for (let char of str1) {\n    freq1.set(char, (freq1.get(char) || 0) + 1);\n  }\n  \n  // Increment counters for characters from second string\n  for (let char of str2) {\n    freq2.set(char, (freq2.get(char) || 0) + 1);\n  }\n  \n  // Check if all counters are zero at the end\n  for (let [char, count] of freq1) {\n    if (freq2.get(char) !== count) return false;\n  }\n  \n  return true;\n}"
+    },
+    {
+      "id": "array",
+      "label": "Array Counter",
+      "description": "Most memory efficient for ASCII strings",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Create a fixed array for all possible characters (36 for a-z and 0-9)",
+        "Map each character to an array index",
+        "Increment/decrement counters in a single pass",
+        "Check if all counters are zero"
+      ],
+      "advantages": [
+        "Constant space complexity O(1)",
+        "Very efficient for ASCII strings",
+        "Single pass through the strings"
+      ],
+      "disadvantages": [
+        "Limited to specific character sets",
+        "Less flexible than hash map approach",
+        "May waste space if character set is small"
+      ],
+      "jsCode": "function isAnagram(str1, str2) {\n  // Create a fixed array for all possible characters (36 for a-z and 0-9)\n  const freq1 = new Array(36).fill(0);\n  const freq2 = new Array(36).fill(0);\n  \n  // Map each character to an array index\n  for (let char of str1) {\n    freq1[char.charCodeAt(0) - 48]++;\n  }\n  \n  for (let char of str2) {\n    freq2[char.charCodeAt(0) - 48]++;\n  }\n  \n  // Increment/decrement counters in a single pass\n  for (let i = 0; i < 36; i++) {\n    if (freq1[i] !== freq2[i]) return false;\n  }\n  \n  return true;\n}",
+      "tsCode": "function isAnagram(str1: string, str2: string): boolean {\n  // Create a fixed array for all possible characters (36 for a-z and 0-9)\n  const freq1 = new Array(36).fill(0);\n  const freq2 = new Array(36).fill(0);\n  \n  // Map each character to an array index\n  for (let char of str1) {\n    freq1[char.charCodeAt(0) - 48]++;\n  }\n  \n  for (let char of str2) {\n    freq2[char.charCodeAt(0) - 48]++;\n  }\n  \n  // Increment/decrement counters in a single pass\n  for (let i = 0; i < 36; i++) {\n    if (freq1[i] !== freq2[i]) return false;\n  }\n  \n  return true;\n}"
+    },
+    {
+      "id": "xor",
+      "label": "XOR Approach",
+      "description": "Limited use case - only works for single-word anagrams without repeated characters",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "XOR all characters from both strings",
+        "If result is 0, each character appeared even number of times",
+        "Works because A⊕A = 0 for any value A",
+        "All characters must cancel out for anagrams"
+      ],
+      "advantages": [
+        "Extremely space efficient (O(1))",
+        "Very fast single pass solution",
+        "Elegant bitwise operation approach"
+      ],
+      "disadvantages": [
+        "Doesn't work with repeated characters",
+        "Can give false positives",
+        "Very limited use case",
+        "Not suitable for most real-world applications"
+      ],
+      "jsCode": "function isAnagram(str1, str2) {\n  // XOR all characters from both strings\n  let result = 0;\n  for (let char of str1) {\n    result ^= char.charCodeAt(0);\n  }\n  for (let char of str2) {\n    result ^= char.charCodeAt(0);\n  }\n  \n  // If result is 0, each character appeared even number of times\n  return result === 0;\n}",
+      "tsCode": "function isAnagram(str1: string, str2: string): boolean {\n  // XOR all characters from both strings\n  let result = 0;\n  for (let char of str1) {\n    result ^= char.charCodeAt(0);\n  }\n  for (let char of str2) {\n    result ^= char.charCodeAt(0);\n  }\n  \n  // If result is 0, each character appeared even number of times\n  return result === 0;\n}"
+    }
+  ]
+}
