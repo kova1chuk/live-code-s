@@ -1,6 +1,6 @@
 {
-  "title": "Graph",
   "description": "Implement a graph data structure with basic operations: add vertex, add edge, and traversal methods (BFS, DFS).",
+  "title": "Graph",
   "examples": [
     {
       "input": "addVertex('A'), addVertex('B'), addEdge('A', 'B')",

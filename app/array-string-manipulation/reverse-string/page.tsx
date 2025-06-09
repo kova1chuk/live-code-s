@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import ReverseStringChallengeContent from "@/features/array-string-manipulation/components/ReverseStringChallengeContent";
-import ReverseStringTestRunner from "@/features/array-string-manipulation/components/ReverseStringTestRunner";
+import ReverseStringChallengeContent from "@/features/array-string-manipulation/reverse-string/components/ReverseStringChallengeContent";
+import ReverseStringTestRunner from "@/features/array-string-manipulation/reverse-string/components/ReverseStringTestRunner";
 import data from "@/features/array-string-manipulation/reverse-string/data.json";
 
 export default function ReverseString() {

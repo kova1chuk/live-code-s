@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import RemoveDuplicatesChallengeContent from "@/features/array-string-manipulation/components/RemoveDuplicatesChallengeContent";
-import RemoveDuplicatesTestRunner from "@/features/array-string-manipulation/components/RemoveDuplicatesTestRunner";
+import RemoveDuplicatesChallengeContent from "@/features/array-string-manipulation/remove-duplicates/components/RemoveDuplicatesChallengeContent";
+import RemoveDuplicatesTestRunner from "@/features/array-string-manipulation/remove-duplicates/components/RemoveDuplicatesTestRunner";
 import data from "@/features/array-string-manipulation/remove-duplicates/data.json";
 
 export default function RemoveDuplicates() {
