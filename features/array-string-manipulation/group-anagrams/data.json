@@ -1,0 +1,131 @@
+{
+  "examples": [
+    {
+      "input": "eat, tea, tan, ate, nat, bat",
+      "output": "[['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]"
+    },
+    {
+      "input": "listen, silent, enlist, google, goolge",
+      "output": "[['listen', 'silent', 'enlist'], ['google', 'goolge']]"
+    }
+  ],
+  "testCases": [
+    {
+      "input": ["eat", "tea", "tan", "ate", "nat", "bat"],
+      "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]],
+      "description": "Basic anagram groups"
+    },
+    {
+      "input": ["listen", "silent", "enlist", "google", "goolge"],
+      "expected": [
+        ["listen", "silent", "enlist"],
+        ["google", "goolge"]
+      ],
+      "description": "Mixed length words"
+    },
+    {
+      "input": [],
+      "expected": [],
+      "description": "Empty array"
+    },
+    {
+      "input": ["hello"],
+      "expected": [["hello"]],
+      "description": "Single word"
+    },
+    {
+      "input": ["", ""],
+      "expected": [["", ""]],
+      "description": "Empty strings"
+    },
+    {
+      "input": ["a", "b", "c", "a"],
+      "expected": [["a", "a"], ["b"], ["c"]],
+      "description": "Single characters with duplicates"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "sorted",
+      "label": "Sorted String Key",
+      "description": "Using sorted strings as keys for grouping",
+      "complexity": {
+        "time": "O(n * k * log k)",
+        "space": "O(n * k)"
+      },
+      "howItWorks": [
+        "For each word, sort its characters to create a key",
+        "Use a Map to group words with the same sorted key",
+        "Convert the Map values to an array of groups",
+        "Return the array of anagram groups"
+      ],
+      "advantages": [
+        "Simple and intuitive approach",
+        "Easy to understand and implement",
+        "Works well for most cases"
+      ],
+      "disadvantages": [
+        "Sorting each word adds time complexity",
+        "Not optimal for very long words",
+        "Uses extra space for sorted strings"
+      ],
+      "jsCode": "function groupAnagrams(strs) {\n  const groups = new Map();\n  for (const str of strs) {\n    const sorted = str.split('').sort().join('');\n    if (!groups.has(sorted)) {\n      groups.set(sorted, []);\n    }\n    groups.get(sorted).push(str);\n  }\n  return Array.from(groups.values());\n}",
+      "tsCode": "function groupAnagrams(strs: string[]): string[][] {\n  const groups = new Map<string, string[]>();\n  for (const str of strs) {\n    const sorted = str.split('').sort().join('');\n    if (!groups.has(sorted)) {\n      groups.set(sorted, []);\n    }\n    groups.get(sorted)!.push(str);\n  }\n  return Array.from(groups.values());\n}"
+    },
+    {
+      "id": "count",
+      "label": "Character Count",
+      "description": "Using character frequency count as key",
+      "complexity": {
+        "time": "O(n * k)",
+        "space": "O(n * k)"
+      },
+      "howItWorks": [
+        "Create a count array for each word's characters",
+        "Convert count array to a string key",
+        "Use the key to group anagrams together",
+        "Return all groups as an array"
+      ],
+      "advantages": [
+        "Better time complexity than sorting approach",
+        "Works well for long words",
+        "No sorting required"
+      ],
+      "disadvantages": [
+        "More complex implementation",
+        "Uses more memory for count arrays",
+        "Limited to lowercase letters"
+      ],
+      "jsCode": "function groupAnagrams(strs) {\n  const groups = new Map();\n  for (const str of strs) {\n    const count = new Array(26).fill(0);\n    for (const char of str) {\n      count[char.charCodeAt(0) - 97]++;\n    }\n    const key = count.join('#');\n    if (!groups.has(key)) {\n      groups.set(key, []);\n    }\n    groups.get(key).push(str);\n  }\n  return Array.from(groups.values());\n}",
+      "tsCode": "function groupAnagrams(strs: string[]): string[][] {\n  const groups = new Map<string, string[]>();\n  for (const str of strs) {\n    const count = new Array(26).fill(0);\n    for (const char of str) {\n      count[char.charCodeAt(0) - 97]++;\n    }\n    const key = count.join('#');\n    if (!groups.has(key)) {\n      groups.set(key, []);\n    }\n    groups.get(key)!.push(str);\n  }\n  return Array.from(groups.values());\n}"
+    },
+    {
+      "id": "prime",
+      "label": "Prime Number Product",
+      "description": "Using prime number products as keys",
+      "complexity": {
+        "time": "O(n * k)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Assign a prime number to each character",
+        "Multiply prime numbers for each word to create a key",
+        "Group words with the same product key",
+        "Return the groups"
+      ],
+      "advantages": [
+        "Fast computation for short words",
+        "No need for sorting or counting",
+        "Unique key for each anagram group"
+      ],
+      "disadvantages": [
+        "Limited by number size (overflow risk)",
+        "Not suitable for very long words",
+        "Prime number multiplication can be slow"
+      ],
+      "jsCode": "function groupAnagrams(strs) {\n  const primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101];\n  const groups = new Map();\n  \n  for (const str of strs) {\n    let key = 1;\n    for (const char of str) {\n      key *= primes[char.charCodeAt(0) - 97];\n    }\n    if (!groups.has(key)) {\n      groups.set(key, []);\n    }\n    groups.get(key).push(str);\n  }\n  \n  return Array.from(groups.values());\n}",
+      "tsCode": "function groupAnagrams(strs: string[]): string[][] {\n  const primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101];\n  const groups = new Map<number, string[]>();\n  \n  for (const str of strs) {\n    let key = 1;\n    for (const char of str) {\n      key *= primes[char.charCodeAt(0) - 97];\n    }\n    if (!groups.has(key)) {\n      groups.set(key, []);\n    }\n    groups.get(key)!.push(str);\n  }\n  \n  return Array.from(groups.values());\n}"
+    }
+  ],
+  "initialCode": "function groupAnagrams(strs) {\n  // Write your code here\n}"
+}
