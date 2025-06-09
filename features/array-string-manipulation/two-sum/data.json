@@ -1,0 +1,159 @@
+{
+  "examples": [
+    {
+      "input": "nums = [2,7,11,15], target = 9",
+      "output": "Result: [0,1]"
+    },
+    {
+      "input": "nums = [3,2,4], target = 6",
+      "output": "Result: [1,2]"
+    },
+    {
+      "input": "nums = [3,3], target = 6",
+      "output": "Result: [0,1]"
+    }
+  ],
+  "testCases": [
+    {
+      "input": {
+        "nums": [2, 7, 11, 15],
+        "target": 9
+      },
+      "expected": [0, 1],
+      "description": "Basic case with positive numbers"
+    },
+    {
+      "input": {
+        "nums": [3, 2, 4],
+        "target": 6
+      },
+      "expected": [1, 2],
+      "description": "Target in middle elements"
+    },
+    {
+      "input": {
+        "nums": [3, 3],
+        "target": 6
+      },
+      "expected": [0, 1],
+      "description": "Same numbers add up to target"
+    },
+    {
+      "input": {
+        "nums": [-1, -2, -3, -4, -5],
+        "target": -8
+      },
+      "expected": [2, 4],
+      "description": "Array with negative numbers"
+    },
+    {
+      "input": {
+        "nums": [1, 2, 3, 4, 5],
+        "target": 10
+      },
+      "expected": [],
+      "description": "No solution exists"
+    },
+    {
+      "input": {
+        "nums": [0, 4, 3, 0],
+        "target": 0
+      },
+      "expected": [0, 3],
+      "description": "Target sum of zero with zeros in array"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "hash-map",
+      "label": "Hash Map",
+      "description": "Using a hash map to store complement values",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Create a hash map to store number-to-index mapping",
+        "For each number, calculate its complement (target - num)",
+        "Check if complement exists in hash map",
+        "If found, return current index and complement's index",
+        "If not found, add current number and index to hash map",
+        "Continue until solution is found or array is exhausted"
+      ],
+      "advantages": [
+        "Optimal time complexity O(n)",
+        "Single pass through the array",
+        "Works with any array size",
+        "Simple to implement"
+      ],
+      "disadvantages": [
+        "Uses extra space O(n)",
+        "Hash map operations have overhead",
+        "Not suitable for memory-constrained systems"
+      ],
+      "jsCode": "function twoSum(nums, target) {\n  const map = new Map();\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    \n    map.set(nums[i], i);\n  }\n  \n  return [];\n}",
+      "tsCode": "function twoSum(nums: number[], target: number): number[] {\n  const map = new Map<number, number>();\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (map.has(complement)) {\n      return [map.get(complement)!, i];\n    }\n    \n    map.set(nums[i], i);\n  }\n  \n  return [];\n}"
+    },
+    {
+      "id": "two-pointers",
+      "label": "Two Pointers (Sorted)",
+      "description": "Using two pointers on a sorted array",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Create array of indices to track original positions",
+        "Sort array while keeping track of original indices",
+        "Use left pointer at start and right pointer at end",
+        "If sum is too small, move left pointer right",
+        "If sum is too large, move right pointer left",
+        "If sum equals target, return original indices"
+      ],
+      "advantages": [
+        "Efficient for sorted arrays",
+        "No hash map needed",
+        "Good for learning two-pointer technique",
+        "Works well with large numbers"
+      ],
+      "disadvantages": [
+        "Requires sorting O(n log n)",
+        "Uses extra space for index tracking",
+        "Not optimal for unsorted arrays",
+        "More complex implementation"
+      ],
+      "jsCode": "function twoSum(nums, target) {\n  // Create array of indices\n  const indices = nums.map((_, i) => i);\n  \n  // Sort indices based on nums values\n  indices.sort((a, b) => nums[a] - nums[b]);\n  \n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left < right) {\n    const sum = nums[indices[left]] + nums[indices[right]];\n    \n    if (sum === target) {\n      return [indices[left], indices[right]];\n    } else if (sum < target) {\n      left++;\n    } else {\n      right--;\n    }\n  }\n  \n  return [];\n}",
+      "tsCode": "function twoSum(nums: number[], target: number): number[] {\n  // Create array of indices\n  const indices = nums.map((_, i) => i);\n  \n  // Sort indices based on nums values\n  indices.sort((a, b) => nums[a] - nums[b]);\n  \n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left < right) {\n    const sum = nums[indices[left]] + nums[indices[right]];\n    \n    if (sum === target) {\n      return [indices[left], indices[right]];\n    } else if (sum < target) {\n      left++;\n    } else {\n      right--;\n    }\n  }\n  \n  return [];\n}"
+    },
+    {
+      "id": "brute-force",
+      "label": "Brute Force",
+      "description": "Using nested loops to check all pairs",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Use two nested loops to iterate through array",
+        "For each number, check all other numbers",
+        "If pair sums to target, return their indices",
+        "Continue until all pairs are checked"
+      ],
+      "advantages": [
+        "Simple to understand and implement",
+        "No extra space needed",
+        "Works with any input array",
+        "Good for small arrays"
+      ],
+      "disadvantages": [
+        "Poor time complexity O(n²)",
+        "Not suitable for large arrays",
+        "Inefficient for most real-world cases",
+        "Doesn't scale well"
+      ],
+      "jsCode": "function twoSum(nums, target) {\n  for (let i = 0; i < nums.length; i++) {\n    for (let j = i + 1; j < nums.length; j++) {\n      if (nums[i] + nums[j] === target) {\n        return [i, j];\n      }\n    }\n  }\n  \n  return [];\n}",
+      "tsCode": "function twoSum(nums: number[], target: number): number[] {\n  for (let i = 0; i < nums.length; i++) {\n    for (let j = i + 1; j < nums.length; j++) {\n      if (nums[i] + nums[j] === target) {\n        return [i, j];\n      }\n    }\n  }\n  \n  return [];\n}"
+    }
+  ],
+  "initialCode": "function twoSum(nums, target) {\n  // Write your code here\n}"
+}
