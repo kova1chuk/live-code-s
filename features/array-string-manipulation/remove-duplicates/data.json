@@ -1,0 +1,142 @@
+{
+  "examples": [
+    {
+      "input": "1,1,2",
+      "output": "Result: [1,2], Length: 2"
+    },
+    {
+      "input": "0,0,1,1,1,2,2,3,3,4",
+      "output": "Result: [0,1,2,3,4], Length: 5"
+    },
+    {
+      "input": "1",
+      "output": "Result: [1], Length: 1"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [1, 1, 2],
+      "expected": {
+        "array": [1, 2, 2],
+        "length": 2
+      },
+      "description": "Basic case with one duplicate"
+    },
+    {
+      "input": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
+      "expected": {
+        "array": [0, 1, 2, 3, 4, 2, 2, 3, 3, 4],
+        "length": 5
+      },
+      "description": "Multiple duplicates"
+    },
+    {
+      "input": [1],
+      "expected": {
+        "array": [1],
+        "length": 1
+      },
+      "description": "Single element"
+    },
+    {
+      "input": [],
+      "expected": {
+        "array": [],
+        "length": 0
+      },
+      "description": "Empty array"
+    },
+    {
+      "input": [1, 1, 1, 1, 1],
+      "expected": {
+        "array": [1, 1, 1, 1, 1],
+        "length": 1
+      },
+      "description": "All elements are same"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "two-pointers",
+      "label": "Two Pointers",
+      "description": "Using two pointers to track unique elements and current position",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Use two pointers: uniqueIndex and currentIndex",
+        "uniqueIndex tracks where to place next unique element",
+        "currentIndex scans through the array",
+        "When finding new unique element, place at uniqueIndex position",
+        "Increment uniqueIndex only for unique elements"
+      ],
+      "advantages": [
+        "In-place modification",
+        "Single pass through array",
+        "Constant extra space",
+        "Maintains relative order"
+      ],
+      "disadvantages": [
+        "Modifies original array",
+        "Requires sorted input array"
+      ],
+      "jsCode": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n  \n  let uniqueIndex = 1;\n  \n  for (let i = 1; i < nums.length; i++) {\n    if (nums[i] !== nums[i - 1]) {\n      nums[uniqueIndex] = nums[i];\n      uniqueIndex++;\n    }\n  }\n  \n  return uniqueIndex;\n}",
+      "tsCode": "function removeDuplicates(nums: number[]): number {\n  if (nums.length === 0) return 0;\n  \n  let uniqueIndex = 1;\n  \n  for (let i = 1; i < nums.length; i++) {\n    if (nums[i] !== nums[i - 1]) {\n      nums[uniqueIndex] = nums[i];\n      uniqueIndex++;\n    }\n  }\n  \n  return uniqueIndex;\n}"
+    },
+    {
+      "id": "set-approach",
+      "label": "Set Approach",
+      "description": "Using Set to get unique elements and copying back",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Convert array to Set to get unique elements",
+        "Convert Set back to array to get unique values",
+        "Copy unique values back to original array",
+        "Return length of unique elements"
+      ],
+      "advantages": [
+        "Simple to understand",
+        "Uses built-in JavaScript Set",
+        "Handles any input array (sorted or not)"
+      ],
+      "disadvantages": [
+        "Uses extra space",
+        "Creates new data structures",
+        "Not optimal for memory"
+      ],
+      "jsCode": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n  \n  const uniqueNums = [...new Set(nums)];\n  const k = uniqueNums.length;\n  \n  // Copy back to original array\n  for (let i = 0; i < k; i++) {\n    nums[i] = uniqueNums[i];\n  }\n  \n  return k;\n}",
+      "tsCode": "function removeDuplicates(nums: number[]): number {\n  if (nums.length === 0) return 0;\n  \n  const uniqueNums = [...new Set(nums)];\n  const k = uniqueNums.length;\n  \n  // Copy back to original array\n  for (let i = 0; i < k; i++) {\n    nums[i] = uniqueNums[i];\n  }\n  \n  return k;\n}"
+    },
+    {
+      "id": "filter-approach",
+      "label": "Filter Approach",
+      "description": "Using array filter to identify unique elements",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Use filter to keep elements different from previous",
+        "Copy filtered elements back to original array",
+        "Return length of unique elements"
+      ],
+      "advantages": [
+        "Functional programming style",
+        "Easy to understand",
+        "Uses built-in array methods"
+      ],
+      "disadvantages": [
+        "Creates new array",
+        "Uses extra space",
+        "Multiple array iterations"
+      ],
+      "jsCode": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n  \n  const uniqueNums = nums.filter((num, index) => {\n    return index === 0 || num !== nums[index - 1];\n  });\n  \n  const k = uniqueNums.length;\n  \n  // Copy back to original array\n  for (let i = 0; i < k; i++) {\n    nums[i] = uniqueNums[i];\n  }\n  \n  return k;\n}",
+      "tsCode": "function removeDuplicates(nums: number[]): number {\n  if (nums.length === 0) return 0;\n  \n  const uniqueNums = nums.filter((num, index) => {\n    return index === 0 || num !== nums[index - 1];\n  });\n  \n  const k = uniqueNums.length;\n  \n  // Copy back to original array\n  for (let i = 0; i < k; i++) {\n    nums[i] = uniqueNums[i];\n  }\n  \n  return k;\n}"
+    }
+  ],
+  "initialCode": "function removeDuplicates(nums) {\n  // Write your code here\n}"
+}
