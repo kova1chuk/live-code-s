@@ -1,0 +1,132 @@
+{
+  "examples": [
+    {
+      "input": "[1, [2, 3], [4, [5, 6]]]",
+      "output": "[1, 2, 3, 4, 5, 6]"
+    },
+    {
+      "input": "[[1, 2], [3, 4], 5]",
+      "output": "[1, 2, 3, 4, 5]"
+    },
+    {
+      "input": "[1, [2, [3, [4]]]]",
+      "output": "[1, 2, 3, 4]"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [1, [2, 3], [4, [5, 6]]],
+      "expected": [1, 2, 3, 4, 5, 6],
+      "description": "Nested array with multiple levels"
+    },
+    {
+      "input": [[1, 2], [3, 4], 5],
+      "expected": [1, 2, 3, 4, 5],
+      "description": "Array with nested arrays at the same level"
+    },
+    {
+      "input": [1, [2, [3, [4]]]],
+      "expected": [1, 2, 3, 4],
+      "description": "Deeply nested array"
+    },
+    {
+      "input": [],
+      "expected": [],
+      "description": "Empty array"
+    },
+    {
+      "input": [1, 2, 3],
+      "expected": [1, 2, 3],
+      "description": "Array with no nesting"
+    },
+    {
+      "input": [[], [[], []], []],
+      "expected": [],
+      "description": "Array with empty nested arrays"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "reduce",
+      "label": "Reduce with Recursion",
+      "description": "Using reduce and recursion to flatten the array",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Uses Array.reduce() to iterate over the array",
+        "For each element, checks if it's an array using Array.isArray()",
+        "If it's an array, recursively calls flattenArray on it",
+        "Concatenates the results using flat.concat()",
+        "Returns the flattened array"
+      ],
+      "advantages": [
+        "Clean and readable code",
+        "Handles any level of nesting",
+        "Maintains order of elements"
+      ],
+      "disadvantages": [
+        "Uses recursion which can be memory-intensive for deeply nested arrays",
+        "May hit call stack limit for extremely deep nesting"
+      ],
+      "jsCode": "function flattenArray(arr) {\n  return arr.reduce((flat, item) => {\n    return flat.concat(Array.isArray(item) ? flattenArray(item) : item);\n  }, []);\n}",
+      "tsCode": "function flattenArray<T>(arr: (T | T[])[]): T[] {\n  return arr.reduce<T[]>((flat, item) => {\n    return flat.concat(Array.isArray(item) ? flattenArray(item) : item);\n  }, []);\n}"
+    },
+    {
+      "id": "flat",
+      "label": "Using Array.flat",
+      "description": "Using the built-in Array.flat() method",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Uses the built-in Array.flat() method",
+        "Passes Infinity as the depth parameter to flatten all levels",
+        "Returns the flattened array"
+      ],
+      "advantages": [
+        "Simplest solution",
+        "Built-in method optimized by the JavaScript engine",
+        "No recursion or complex logic needed"
+      ],
+      "disadvantages": [
+        "Not supported in older browsers",
+        "Less control over the flattening process",
+        "May not be as performant for simple cases"
+      ],
+      "jsCode": "function flattenArray(arr) {\n  return arr.flat(Infinity);\n}",
+      "tsCode": "function flattenArray<T>(arr: (T | T[])[]): T[] {\n  return arr.flat(Infinity) as T[];\n}"
+    },
+    {
+      "id": "stack",
+      "label": "Stack-based Approach",
+      "description": "Using a stack for iterative flattening",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Creates a stack from the input array",
+        "Iteratively processes elements from the stack",
+        "If an element is an array, pushes its elements onto the stack",
+        "If an element is not an array, adds it to the result",
+        "Continues until the stack is empty"
+      ],
+      "advantages": [
+        "No recursion needed",
+        "Memory efficient",
+        "Won't hit call stack limits"
+      ],
+      "disadvantages": [
+        "More complex implementation",
+        "Requires additional space for the stack",
+        "May be slower for simple cases"
+      ],
+      "jsCode": "function flattenArray(arr) {\n  const stack = [...arr];\n  const result = [];\n  \n  while (stack.length) {\n    const next = stack.pop();\n    if (Array.isArray(next)) {\n      stack.push(...next);\n    } else {\n      result.unshift(next);\n    }\n  }\n  \n  return result;\n}",
+      "tsCode": "function flattenArray<T>(arr: (T | T[])[]): T[] {\n  const stack = [...arr];\n  const result: T[] = [];\n  \n  while (stack.length) {\n    const next = stack.pop();\n    if (Array.isArray(next)) {\n      stack.push(...next);\n    } else {\n      result.unshift(next);\n    }\n  }\n  \n  return result;\n}"
+    }
+  ],
+  "initialCode": "function flattenArray(arr) {\n  // Write your code here\n}"
+}
