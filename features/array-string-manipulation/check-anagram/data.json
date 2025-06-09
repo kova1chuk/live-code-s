@@ -6,6 +6,7 @@
     { "input": "debit card, bad credit", "output": "true" },
     { "input": "a gentleman, elegant man", "output": "true" }
   ],
+  "initialCode": "function isAnagram(str1, str2) {\n  // Write your solution here\n  const normalize = str => \n    str.toLowerCase()\n       .replace(/[^a-z0-9]/g, '')\n       .split('')\n       .sort()\n       .join('');\n  return normalize(str1) === normalize(str2);\n}",
   "testCases": [
     {
       "input": ["listen", "silent"],

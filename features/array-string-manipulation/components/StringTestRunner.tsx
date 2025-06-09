@@ -4,7 +4,7 @@ import TestRunner, { BaseTestCase, TestResult } from "@/components/TestRunner";
 interface StringTestCase extends BaseTestCase {
   input: string;
   expected: string;
-  description: string;
+  description?: string;
 }
 
 type StringFunction = (input: string) => string;

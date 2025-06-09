@@ -4,7 +4,7 @@ import TestRunner, { BaseTestCase, TestResult } from "@/components/TestRunner";
 interface AnagramTestCase extends BaseTestCase {
   input: [string, string];
   expected: boolean;
-  description: string;
+  description?: string;
 }
 
 type AnagramFunction = (str1: string, str2: string) => boolean;
