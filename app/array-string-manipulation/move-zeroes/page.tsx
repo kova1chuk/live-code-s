@@ -1,28 +1,21 @@
 "use client";
 import { useState } from "react";
-import SectionBox from "@/components/SectionBox";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
-import Typography from "@/components/Typography";
-import List, { ListItem } from "@/components/List";
-import CodeBlock from "@/components/CodeBlock";
-import ExampleRow from "@/components/ExampleRow";
+import MoveZeroesChallengeContent from "@/features/array-string-manipulation/components/MoveZeroesChallengeContent";
+import MoveZeroesTestRunner from "@/features/array-string-manipulation/components/MoveZeroesTestRunner";
+import data from "@/features/array-string-manipulation/move-zeroes/data.json";
 
 export default function MoveZeroes() {
   const [input, setInput] = useState("");
-  const [result, setResult] = useState("");
-  const [examples] = useState([
-    { input: "[0, 1, 0, 3, 12]", output: "[1, 3, 12, 0, 0]" },
-    { input: "[0]", output: "[0]" },
-    { input: "[1, 2, 3, 0, 0, 0]", output: "[1, 2, 3, 0, 0, 0]" },
-  ]);
+  const [result, setResult] = useState<number[] | null>(null);
+  const [code, setCode] = useState<string>(data.initialCode);
 
-  const moveZeroes = (nums: number[]): number[] => {
+  const moveZeroes = (nums: number[]) => {
     let nonZeroIndex = 0;
 
-    // Move all non-zero elements to the front
+    // Move all non-zero elements to front
     for (let i = 0; i < nums.length; i++) {
       if (nums[i] !== 0) {
+        // Swap elements
         [nums[nonZeroIndex], nums[i]] = [nums[i], nums[nonZeroIndex]];
         nonZeroIndex++;
       }
@@ -34,227 +27,39 @@ export default function MoveZeroes() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const inputArray = JSON.parse(input);
-      if (!Array.isArray(inputArray)) {
-        throw new Error("Input must be an array");
+      const nums = input.split(",").map((num) => parseInt(num.trim(), 10));
+      if (nums.some(isNaN)) {
+        throw new Error("Invalid input: please enter comma-separated numbers");
       }
-      setResult(JSON.stringify(moveZeroes([...inputArray])));
-    } catch {
-      setResult("Invalid input. Please enter a valid array of numbers.");
+      setResult(moveZeroes([...nums])); // Create a copy to avoid modifying original
+    } catch (error) {
+      alert((error as Error).message);
     }
   };
 
   const handleExampleClick = (example: { input: string; output: string }) => {
     setInput(example.input);
-    setResult(example.output);
+    const nums = example.input
+      .split(",")
+      .map((num) => parseInt(num.trim(), 10));
+    setResult(moveZeroes([...nums]));
   };
 
   return (
-    <div className="p-4 sm:p-6 md:p-8">
-      <Typography
-        variant="h2"
-        className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold"
-      >
-        Move Zeroes
-      </Typography>
-
-      <div className="space-y-6 sm:space-y-8">
-        <SectionBox title="Problem Description">
-          <div className="space-y-4">
-            <Typography className="text-base sm:text-lg">
-              Write a function that takes an array of numbers and moves all
-              zeroes to the end of the array while maintaining the relative
-              order of non-zero elements. The operation should be performed
-              in-place if possible.
-            </Typography>
-            <div className="space-y-3">
-              <Typography variant="h3" className="text-lg font-semibold">
-                Examples:
-              </Typography>
-              <div className="flex flex-col gap-4">
-                {examples.map((example, index) => (
-                  <ExampleRow
-                    key={index}
-                    input={example.input}
-                    output={example.output}
-                    onClick={() => handleExampleClick(example)}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </SectionBox>
-
-        <SectionBox title="Try it out">
-          <div className="space-y-4">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="max-w-md">
-                <Input
-                  id="input"
-                  label="Enter an array of numbers:"
-                  value={input}
-                  onChange={setInput}
-                  placeholder="e.g. [0, 1, 0, 3, 12]"
-                />
-              </div>
-              <Button type="submit" className="w-full sm:w-auto">
-                Move Zeroes
-              </Button>
-            </form>
-            {result && (
-              <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                <Typography variant="h3" className="text-lg font-semibold mb-2">
-                  Result:
-                </Typography>
-                <Typography className="text-base sm:text-lg break-all">
-                  {result}
-                </Typography>
-              </div>
-            )}
-          </div>
-        </SectionBox>
-
-        <SectionBox title="Solution">
-          <div className="space-y-6">
-            <Typography className="text-base sm:text-lg">
-              Here are three different approaches to solve this problem, each
-              with its own advantages:
-            </Typography>
-          </div>
-        </SectionBox>
-
-        <SectionBox title="Method 1: Two-pointer Approach (In-place)">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <Typography className="text-base sm:text-lg">
-                This method uses two pointers to track positions and swap
-                elements in place:
-              </Typography>
-              <CodeBlock
-                jsCode={`function moveZeroes(nums) {
-  let nonZeroIndex = 0;
-  
-  // Move all non-zero elements to the front
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[i] !== 0) {
-      [nums[nonZeroIndex], nums[i]] = [nums[i], nums[nonZeroIndex]];
-      nonZeroIndex++;
-    }
-  }
-  
-  return nums;
-}`}
-                tsCode={`function moveZeroes(nums: number[]): number[] {
-  let nonZeroIndex = 0;
-  
-  // Move all non-zero elements to the front
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[i] !== 0) {
-      [nums[nonZeroIndex], nums[i]] = [nums[i], nums[nonZeroIndex]];
-      nonZeroIndex++;
-    }
-  }
-  
-  return nums;
-}`}
-              />
-            </div>
-            <div className="space-y-4">
-              <List type="unordered" className="space-y-2">
-                <ListItem>
-                  Keep track of position for non-zero elements
-                </ListItem>
-                <ListItem>Swap non-zero elements to the front</ListItem>
-                <ListItem>Automatically moves zeroes to the end</ListItem>
-              </List>
-            </div>
-          </div>
-        </SectionBox>
-
-        <SectionBox title="Method 2: Filter and Fill">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <Typography className="text-base sm:text-lg">
-                This method uses array methods to create a new array with the
-                desired order:
-              </Typography>
-              <CodeBlock
-                jsCode={`function moveZeroes(nums) {
-  const nonZeros = nums.filter(num => num !== 0);
-  return [...nonZeros, ...Array(nums.length - nonZeros.length).fill(0)];
-}`}
-                tsCode={`function moveZeroes(nums: number[]): number[] {
-  const nonZeros = nums.filter(num => num !== 0);
-  return [...nonZeros, ...Array(nums.length - nonZeros.length).fill(0)];
-}`}
-              />
-            </div>
-            <div className="space-y-4">
-              <List type="unordered" className="space-y-2">
-                <ListItem>Filter out non-zero elements</ListItem>
-                <ListItem>Create array of zeroes for remaining length</ListItem>
-                <ListItem>Combine non-zero elements with zeroes</ListItem>
-              </List>
-            </div>
-          </div>
-        </SectionBox>
-
-        <SectionBox title="Method 3: Two-pass Approach">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <Typography className="text-base sm:text-lg">
-                This method uses two passes through the array to achieve the
-                result:
-              </Typography>
-              <CodeBlock
-                jsCode={`function moveZeroes(nums) {
-  // First pass: copy non-zero elements
-  let pos = 0;
-  for (const num of nums) {
-    if (num !== 0) {
-      nums[pos] = num;
-      pos++;
-    }
-  }
-  
-  // Second pass: fill remaining positions with zeros
-  while (pos < nums.length) {
-    nums[pos] = 0;
-    pos++;
-  }
-  
-  return nums;
-}`}
-                tsCode={`function moveZeroes(nums: number[]): number[] {
-  // First pass: copy non-zero elements
-  let pos = 0;
-  for (const num of nums) {
-    if (num !== 0) {
-      nums[pos] = num;
-      pos++;
-    }
-  }
-  
-  // Second pass: fill remaining positions with zeros
-  while (pos < nums.length) {
-    nums[pos] = 0;
-    pos++;
-  }
-  
-  return nums;
-}`}
-              />
-            </div>
-            <div className="space-y-4">
-              <List type="unordered" className="space-y-2">
-                <ListItem>First pass: copy non-zero elements to front</ListItem>
-                <ListItem>Second pass: fill remaining with zeroes</ListItem>
-                <ListItem>Maintains relative order</ListItem>
-              </List>
-            </div>
-          </div>
-        </SectionBox>
-      </div>
-    </div>
+    <MoveZeroesChallengeContent
+      title="Move Zeroes"
+      description="Given an array nums, write a function that moves all zeroes to the end of the array while maintaining the relative order of the non-zero elements. The function should modify the array in-place without making a copy of the array."
+      examples={data.examples}
+      testCases={data.testCases}
+      solutions={data.solutions}
+      initialCode={code}
+      onCodeChange={setCode}
+      TestRunner={MoveZeroesTestRunner}
+      inputValue={input}
+      onInputChange={setInput}
+      onInputSubmit={handleSubmit}
+      result={result}
+      onExampleClick={handleExampleClick}
+    />
   );
 }

@@ -1,0 +1,132 @@
+{
+  "examples": [
+    {
+      "input": "0,1,0,3,12",
+      "output": "Result: [1,3,12,0,0]"
+    },
+    {
+      "input": "0,0,1",
+      "output": "Result: [1,0,0]"
+    },
+    {
+      "input": "0",
+      "output": "Result: [0]"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [0, 1, 0, 3, 12],
+      "expected": [1, 3, 12, 0, 0],
+      "description": "Basic case with multiple zeroes"
+    },
+    {
+      "input": [0, 0, 1],
+      "expected": [1, 0, 0],
+      "description": "Zeroes at the start"
+    },
+    {
+      "input": [1, 2, 0, 0],
+      "expected": [1, 2, 0, 0],
+      "description": "Zeroes at the end"
+    },
+    {
+      "input": [0],
+      "expected": [0],
+      "description": "Single zero"
+    },
+    {
+      "input": [1],
+      "expected": [1],
+      "description": "Single non-zero"
+    },
+    {
+      "input": [1, 2, 3],
+      "expected": [1, 2, 3],
+      "description": "No zeroes"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "two-pointers",
+      "label": "Two Pointers",
+      "description": "Using two pointers to track non-zero elements and swap positions",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Use two pointers: nonZeroIndex and currentIndex",
+        "nonZeroIndex tracks where to place next non-zero element",
+        "currentIndex scans through the array",
+        "When finding non-zero element, swap with nonZeroIndex position",
+        "Increment nonZeroIndex after each swap"
+      ],
+      "advantages": [
+        "In-place modification",
+        "Single pass through array",
+        "Maintains relative order of non-zero elements",
+        "Optimal space complexity"
+      ],
+      "disadvantages": [
+        "Modifies original array",
+        "May perform unnecessary swaps when no zeroes present"
+      ],
+      "jsCode": "function moveZeroes(nums) {\n  let nonZeroIndex = 0;\n  \n  // Move all non-zero elements to front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      // Swap elements\n      [nums[nonZeroIndex], nums[i]] = [nums[i], nums[nonZeroIndex]];\n      nonZeroIndex++;\n    }\n  }\n  \n  return nums;\n}",
+      "tsCode": "function moveZeroes(nums: number[]): number[] {\n  let nonZeroIndex = 0;\n  \n  // Move all non-zero elements to front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      // Swap elements\n      [nums[nonZeroIndex], nums[i]] = [nums[i], nums[nonZeroIndex]];\n      nonZeroIndex++;\n    }\n  }\n  \n  return nums;\n}"
+    },
+    {
+      "id": "copy-approach",
+      "label": "Copy Non-Zero Elements",
+      "description": "Copy non-zero elements to front and fill remaining with zeroes",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Keep track of position for next non-zero element",
+        "Copy each non-zero element to front of array",
+        "Fill remaining positions with zeroes",
+        "No swapping needed"
+      ],
+      "advantages": [
+        "Simpler to understand",
+        "Fewer array writes than swapping",
+        "Still maintains relative order"
+      ],
+      "disadvantages": [
+        "Two passes through array",
+        "Still modifies original array"
+      ],
+      "jsCode": "function moveZeroes(nums) {\n  let pos = 0;\n  \n  // Copy non-zero elements to front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[pos] = nums[i];\n      pos++;\n    }\n  }\n  \n  // Fill remaining positions with zeroes\n  while (pos < nums.length) {\n    nums[pos] = 0;\n    pos++;\n  }\n  \n  return nums;\n}",
+      "tsCode": "function moveZeroes(nums: number[]): number[] {\n  let pos = 0;\n  \n  // Copy non-zero elements to front\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[pos] = nums[i];\n      pos++;\n    }\n  }\n  \n  // Fill remaining positions with zeroes\n  while (pos < nums.length) {\n    nums[pos] = 0;\n    pos++;\n  }\n  \n  return nums;\n}"
+    },
+    {
+      "id": "filter-approach",
+      "label": "Filter and Fill",
+      "description": "Filter out non-zero elements and concatenate with zeroes",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Filter array to get non-zero elements",
+        "Count number of zeroes needed",
+        "Create new array with non-zero elements followed by zeroes",
+        "Copy back to original array"
+      ],
+      "advantages": [
+        "Most readable solution",
+        "Easy to understand",
+        "Uses built-in array methods"
+      ],
+      "disadvantages": [
+        "Uses extra space",
+        "Creates new arrays",
+        "Not in-place modification"
+      ],
+      "jsCode": "function moveZeroes(nums) {\n  const nonZeros = nums.filter(num => num !== 0);\n  const zeroCount = nums.length - nonZeros.length;\n  const result = [...nonZeros, ...Array(zeroCount).fill(0)];\n  \n  // Copy back to original array\n  for (let i = 0; i < nums.length; i++) {\n    nums[i] = result[i];\n  }\n  \n  return nums;\n}",
+      "tsCode": "function moveZeroes(nums: number[]): number[] {\n  const nonZeros = nums.filter(num => num !== 0);\n  const zeroCount = nums.length - nonZeros.length;\n  const result = [...nonZeros, ...Array(zeroCount).fill(0)];\n  \n  // Copy back to original array\n  for (let i = 0; i < nums.length; i++) {\n    nums[i] = result[i];\n  }\n  \n  return nums;\n}"
+    }
+  ],
+  "initialCode": "function moveZeroes(nums) {\n  // Write your code here\n}"
+}
