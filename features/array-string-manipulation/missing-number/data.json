@@ -1,0 +1,132 @@
+{
+  "examples": [
+    {
+      "input": "3,0,1",
+      "output": "Missing number: 2"
+    },
+    {
+      "input": "9,6,4,2,3,5,7,0,1",
+      "output": "Missing number: 8"
+    },
+    {
+      "input": "0,1",
+      "output": "Missing number: 2"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [3, 0, 1],
+      "expected": 2,
+      "description": "Basic case with small range"
+    },
+    {
+      "input": [9, 6, 4, 2, 3, 5, 7, 0, 1],
+      "expected": 8,
+      "description": "Larger range with missing number in the middle"
+    },
+    {
+      "input": [0, 1],
+      "expected": 2,
+      "description": "Missing number at the end"
+    },
+    {
+      "input": [1],
+      "expected": 0,
+      "description": "Missing number at the start"
+    },
+    {
+      "input": [1, 2, 3],
+      "expected": 0,
+      "description": "Missing zero"
+    },
+    {
+      "input": [0],
+      "expected": 1,
+      "description": "Array with single element"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "sum-formula",
+      "label": "Sum Formula",
+      "description": "Using arithmetic sequence sum formula",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Calculate expected sum using arithmetic sequence formula: n * (n + 1) / 2",
+        "Calculate actual sum of array elements",
+        "Subtract actual sum from expected sum to find missing number"
+      ],
+      "advantages": [
+        "Simple and easy to understand",
+        "Constant space complexity",
+        "Single pass through array"
+      ],
+      "disadvantages": [
+        "May overflow with large numbers",
+        "Not suitable for floating point numbers",
+        "Requires complete range from 0 to n"
+      ],
+      "jsCode": "function findMissingNumber(nums) {\n  const n = nums.length;\n  const expectedSum = (n * (n + 1)) / 2;\n  const actualSum = nums.reduce((sum, num) => sum + num, 0);\n  return expectedSum - actualSum;\n}",
+      "tsCode": "function findMissingNumber(nums: number[]): number {\n  const n = nums.length;\n  const expectedSum = (n * (n + 1)) / 2;\n  const actualSum = nums.reduce((sum, num) => sum + num, 0);\n  return expectedSum - actualSum;\n}"
+    },
+    {
+      "id": "xor-approach",
+      "label": "XOR Operation",
+      "description": "Using XOR operation to find missing number",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "XOR all numbers from 0 to n",
+        "XOR all numbers in the array",
+        "The result is the missing number (due to XOR properties)",
+        "Each number XORed with itself becomes 0",
+        "The missing number remains after all XOR operations"
+      ],
+      "advantages": [
+        "No risk of integer overflow",
+        "Constant space complexity",
+        "Works with large numbers",
+        "Single pass through array"
+      ],
+      "disadvantages": [
+        "Less intuitive than sum approach",
+        "Requires understanding of XOR properties",
+        "Only works with integers"
+      ],
+      "jsCode": "function findMissingNumber(nums) {\n  let xor = nums.length;\n  \n  // XOR all numbers from 0 to n\n  for (let i = 0; i < nums.length; i++) {\n    xor ^= i;\n    xor ^= nums[i];\n  }\n  \n  return xor;\n}",
+      "tsCode": "function findMissingNumber(nums: number[]): number {\n  let xor = nums.length;\n  \n  // XOR all numbers from 0 to n\n  for (let i = 0; i < nums.length; i++) {\n    xor ^= i;\n    xor ^= nums[i];\n  }\n  \n  return xor;\n}"
+    },
+    {
+      "id": "binary-search",
+      "label": "Binary Search",
+      "description": "Using binary search on sorted array",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Sort the array first",
+        "Use binary search to find first position where index doesn't match value",
+        "If all positions match their indices, the missing number is n"
+      ],
+      "advantages": [
+        "Works well with sorted input",
+        "Can be modified for other similar problems",
+        "Good for learning binary search concept"
+      ],
+      "disadvantages": [
+        "Requires sorting (O(n log n))",
+        "Not as efficient as other methods",
+        "Modifies input array if sorting in place"
+      ],
+      "jsCode": "function findMissingNumber(nums) {\n  nums.sort((a, b) => a - b);\n  \n  let left = 0;\n  let right = nums.length;\n  \n  while (left < right) {\n    const mid = Math.floor((left + right) / 2);\n    if (nums[mid] > mid) {\n      right = mid;\n    } else {\n      left = mid + 1;\n    }\n  }\n  \n  return left;\n}",
+      "tsCode": "function findMissingNumber(nums: number[]): number {\n  nums.sort((a, b) => a - b);\n  \n  let left = 0;\n  let right = nums.length;\n  \n  while (left < right) {\n    const mid = Math.floor((left + right) / 2);\n    if (nums[mid] > mid) {\n      right = mid;\n    } else {\n      left = mid + 1;\n    }\n  }\n  \n  return left;\n}"
+    }
+  ],
+  "initialCode": "function findMissingNumber(nums) {\n  // Write your code here\n}"
+}
