@@ -1,0 +1,111 @@
+{
+  "examples": [
+    {
+      "input": "abcabcbb",
+      "output": "Length: 3, Substring: 'abc'"
+    },
+    {
+      "input": "pwwkew",
+      "output": "Length: 3, Substring: 'wke'"
+    },
+    {
+      "input": "bbbbb",
+      "output": "Length: 1, Substring: 'b'"
+    },
+    {
+      "input": "dvdf",
+      "output": "Length: 3, Substring: 'vdf'"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "abcabcbb",
+      "expected": { "length": 3, "substring": "abc" },
+      "description": "Basic case with repeating characters"
+    },
+    {
+      "input": "pwwkew",
+      "expected": { "length": 3, "substring": "wke" },
+      "description": "Multiple non-overlapping substrings"
+    },
+    {
+      "input": "bbbbb",
+      "expected": { "length": 1, "substring": "b" },
+      "description": "All same characters"
+    },
+    {
+      "input": "",
+      "expected": { "length": 0, "substring": "" },
+      "description": "Empty string"
+    },
+    {
+      "input": "a",
+      "expected": { "length": 1, "substring": "a" },
+      "description": "Single character"
+    },
+    {
+      "input": "dvdf",
+      "expected": { "length": 3, "substring": "vdf" },
+      "description": "Repeating character with longer substring after"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "sliding-window-map",
+      "label": "Sliding Window with Map",
+      "description": "Using a sliding window with a Map to track character positions",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(min(m,n))"
+      },
+      "howItWorks": [
+        "Use two pointers to define a window: start and current position",
+        "Use a Map to store the last position of each character",
+        "When finding a repeating character, move start pointer after its last position",
+        "Track maximum length and starting position of longest substring",
+        "Return both length and the actual substring"
+      ],
+      "advantages": [
+        "Linear time complexity O(n)",
+        "Handles all types of characters",
+        "Returns both length and substring",
+        "Efficient for large strings"
+      ],
+      "disadvantages": [
+        "Uses extra space for the Map",
+        "Slightly more complex implementation"
+      ],
+      "jsCode": "function findLongestSubstring(str) {\n  let maxLength = 0;\n  let start = 0;\n  let maxStart = 0;\n  const charMap = new Map();\n\n  for (let i = 0; i < str.length; i++) {\n    const char = str[i];\n    if (charMap.has(char) && charMap.get(char) >= start) {\n      start = charMap.get(char) + 1;\n    }\n    charMap.set(char, i);\n    \n    const currentLength = i - start + 1;\n    if (currentLength > maxLength) {\n      maxLength = currentLength;\n      maxStart = start;\n    }\n  }\n\n  return {\n    length: maxLength,\n    substring: str.slice(maxStart, maxStart + maxLength)\n  };\n}",
+      "tsCode": "function findLongestSubstring(str: string): { length: number; substring: string } {\n  let maxLength = 0;\n  let start = 0;\n  let maxStart = 0;\n  const charMap = new Map<string, number>();\n\n  for (let i = 0; i < str.length; i++) {\n    const char = str[i];\n    if (charMap.has(char) && charMap.get(char)! >= start) {\n      start = charMap.get(char)! + 1;\n    }\n    charMap.set(char, i);\n    \n    const currentLength = i - start + 1;\n    if (currentLength > maxLength) {\n      maxLength = currentLength;\n      maxStart = start;\n    }\n  }\n\n  return {\n    length: maxLength,\n    substring: str.slice(maxStart, maxStart + maxLength)\n  };\n}"
+    },
+    {
+      "id": "set-approach",
+      "label": "Set-based Approach",
+      "description": "Using a Set to track unique characters in the current window",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(min(m,n))"
+      },
+      "howItWorks": [
+        "Use a Set to store characters in current window",
+        "Use two pointers: left and right",
+        "Expand window by adding characters to Set",
+        "When duplicate found, remove characters from left until unique",
+        "Track maximum length seen so far"
+      ],
+      "advantages": [
+        "Simpler implementation",
+        "Good for when only length is needed",
+        "Easy to understand and maintain"
+      ],
+      "disadvantages": [
+        "May need to remove multiple characters",
+        "Doesn't track substring position directly",
+        "Extra work needed to get substring"
+      ],
+      "jsCode": "function findLongestSubstring(str) {\n  const chars = new Set();\n  let maxLength = 0;\n  let start = 0;\n  let maxStart = 0;\n\n  for (let i = 0; i < str.length; i++) {\n    while (chars.has(str[i])) {\n      chars.delete(str[start]);\n      start++;\n    }\n    chars.add(str[i]);\n    \n    const currentLength = i - start + 1;\n    if (currentLength > maxLength) {\n      maxLength = currentLength;\n      maxStart = start;\n    }\n  }\n\n  return {\n    length: maxLength,\n    substring: str.slice(maxStart, maxStart + maxLength)\n  };\n}",
+      "tsCode": "function findLongestSubstring(str: string): { length: number; substring: string } {\n  const chars = new Set<string>();\n  let maxLength = 0;\n  let start = 0;\n  let maxStart = 0;\n\n  for (let i = 0; i < str.length; i++) {\n    while (chars.has(str[i])) {\n      chars.delete(str[start]);\n      start++;\n    }\n    chars.add(str[i]);\n    \n    const currentLength = i - start + 1;\n    if (currentLength > maxLength) {\n      maxLength = currentLength;\n      maxStart = start;\n    }\n  }\n\n  return {\n    length: maxLength,\n    substring: str.slice(maxStart, maxStart + maxLength)\n  };\n}"
+    }
+  ],
+  "initialCode": "function findLongestSubstring(str) {\n  // Write your code here\n}"
+}

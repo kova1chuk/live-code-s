@@ -111,6 +111,10 @@ export default function Header() {
           path: "/array-string-manipulation/longest-substring",
         },
         {
+          name: "Group Anagrams",
+          path: "/array-string-manipulation/group-anagrams",
+        },
+        {
           name: "Rotate Array",
           path: "/array-string-manipulation/rotate-array",
         },
@@ -121,10 +125,6 @@ export default function Header() {
         {
           name: "Find Missing Number in Range",
           path: "/array-string-manipulation/missing-number",
-        },
-        {
-          name: "Group Anagrams",
-          path: "/array-string-manipulation/group-anagrams",
         },
         {
           name: "Array Methods",
