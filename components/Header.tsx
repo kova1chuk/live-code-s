@@ -123,6 +123,10 @@ export default function Header() {
           path: "/array-string-manipulation/missing-number",
         },
         {
+          name: "Group Anagrams",
+          path: "/array-string-manipulation/group-anagrams",
+        },
+        {
           name: "Array Methods",
           path: "/array-string-manipulation/array-methods",
         },
