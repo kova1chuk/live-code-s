@@ -123,6 +123,14 @@ export default function GroupAnagramsChallengeContent({
         {title}
       </Typography>
 
+      <div className="mb-8 p-8 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 backdrop-blur-xl rounded-t-2xl border-t-4 border-t-blue-500/50 dark:border-t-blue-400/50 border-x border-b-4 border-x-blue-200/50 dark:border-x-blue-800/50 border-b-blue-500/50 dark:border-b-blue-400/50 shadow-xl overflow-hidden">
+        <div>
+          <Typography className="text-slate-800 dark:text-slate-200 text-lg sm:text-xl leading-relaxed">
+            {description}
+          </Typography>
+        </div>
+      </div>
+
       <div className="space-y-6 sm:space-y-8">
         <SectionBox title="Problem Description">
           <div className="space-y-4">

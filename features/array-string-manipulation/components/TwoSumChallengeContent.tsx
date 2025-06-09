@@ -36,7 +36,6 @@ interface Solution {
 }
 
 interface TwoSumChallengeContentProps {
-  title: string;
   description: string;
   examples: Example[];
   testCases: TwoSumTestCase[];
@@ -59,7 +58,6 @@ interface TwoSumChallengeContentProps {
 }
 
 export default function TwoSumChallengeContent({
-  title,
   description,
   examples,
   testCases,
@@ -118,35 +116,36 @@ export default function TwoSumChallengeContent({
   ];
 
   return (
-    <div className="p-4 sm:p-6 md:p-8">
-      <Typography
-        variant="h2"
-        className="mb-4 sm:mb-6 text-2xl sm:text-3xl font-bold"
-      >
-        {title}
-      </Typography>
+    <>
+      <div className="mb-8 p-8 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 backdrop-blur-xl rounded-t-2xl border-t-4 border-t-blue-500/50 dark:border-t-blue-400/50 border-x border-b-4 border-x-blue-200/50 dark:border-x-blue-800/50 border-b-blue-500/50 dark:border-b-blue-400/50 shadow-xl overflow-hidden">
+        <div>
+          <Typography className="text-slate-800 dark:text-slate-200 text-lg sm:text-xl leading-relaxed">
+            {description}
+          </Typography>
+        </div>
+      </div>
+      <div className="p-4 sm:p-6 md:p-8">
+        <div className="space-y-6 sm:space-y-8">
+          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+            <div className="space-y-6">
+              <div>
+                <Typography variant="h3" className="text-lg font-semibold mb-4">
+                  Examples:
+                </Typography>
 
-      <div className="space-y-6 sm:space-y-8">
-        <SectionBox title="Problem Description">
-          <div className="space-y-4">
-            <Typography className="text-base sm:text-lg">
-              {description}
-            </Typography>
-            <div className="space-y-3">
-              <Typography variant="h3" className="text-lg font-semibold">
-                Examples:
-              </Typography>
-              <div className="flex flex-col gap-4">
-                {examples.map((example, index) => (
-                  <ExampleCard
-                    key={index}
-                    index={index}
-                    input={example.input}
-                    output={example.output}
-                    onTryClick={() => onExampleClick(example)}
-                  />
-                ))}
+                <div className="flex flex-col gap-4">
+                  {examples.map((example, index) => (
+                    <ExampleCard
+                      key={index}
+                      index={index}
+                      input={example.input}
+                      output={example.output}
+                      onTryClick={() => onExampleClick(example)}
+                    />
+                  ))}
+                </div>
               </div>
+
               <div className="mt-8 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-xl border border-slate-700/50 shadow-lg p-6">
                 <Typography
                   variant="h3"
@@ -194,12 +193,12 @@ export default function TwoSumChallengeContent({
               </div>
             </div>
           </div>
-        </SectionBox>
 
-        <SectionBox title="Solution">
-          <TabsContent tabs={solutionTabs} />
-        </SectionBox>
+          <SectionBox title="Solution">
+            <TabsContent tabs={solutionTabs} />
+          </SectionBox>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
