@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import TwoSumChallengeContent from "@/features/array-string-manipulation/components/TwoSumChallengeContent";
-import TwoSumTestRunner from "@/features/array-string-manipulation/components/TwoSumTestRunner";
+import TwoSumChallengeContent from "@/features/array-string-manipulation/two-sum/components/TwoSumChallengeContent";
+import TwoSumTestRunner from "@/features/array-string-manipulation/two-sum/components/TwoSumTestRunner";
 import data from "@/features/array-string-manipulation/two-sum/data.json";
 
 export default function TwoSum() {
@@ -65,8 +65,7 @@ export default function TwoSum() {
 
   return (
     <TwoSumChallengeContent
-      title="Two Sum"
-      description="Given an array of integers nums and an integer target, return indices of the two numbers in the array such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order."
+      description={data.description}
       examples={data.examples}
       testCases={data.testCases}
       solutions={data.solutions}
