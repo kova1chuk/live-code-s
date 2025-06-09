@@ -1,0 +1,142 @@
+{
+  "examples": [
+    { "input": "hello", "output": "olleh" },
+    { "input": "JavaScript", "output": "tpircSavaJ" },
+    { "input": "12345", "output": "54321" }
+  ],
+  "testCases": [
+    {
+      "input": "hello",
+      "expected": "olleh",
+      "description": "Basic string reversal"
+    },
+    {
+      "input": "JavaScript",
+      "expected": "tpircSavaJ",
+      "description": "String with mixed case"
+    },
+    {
+      "input": "12345",
+      "expected": "54321",
+      "description": "Numeric string"
+    },
+    {
+      "input": "",
+      "expected": "",
+      "description": "Empty string"
+    },
+    {
+      "input": "a",
+      "expected": "a",
+      "description": "Single character"
+    }
+  ],
+  "initialCode": "function reverseString(str) {\n  // Write your solution here\n  return str.split('').reverse().join('');\n}",
+  "initialTsCode": "function reverseString(str: string): string {\n  // Write your solution here\n  return str.split('').reverse().join('');\n}",
+  "solutions": [
+    {
+      "id": "built-in",
+      "label": "Built-in Methods",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "description": "Using JavaScript's built-in array methods to reverse the string",
+      "howItWorks": [
+        "Split the string into an array using split('')",
+        "Reverse the array using reverse()",
+        "Join back into a string using join('')"
+      ],
+      "advantages": [
+        "Simple and readable code",
+        "Uses native JavaScript methods",
+        "Good for most use cases"
+      ],
+      "disadvantages": [
+        "Creates intermediate array",
+        "May not be the most memory efficient",
+        "Multiple array operations"
+      ],
+      "jsCode": "function reverseString(str) {\n  return str.split('').reverse().join('');\n}",
+      "tsCode": "function reverseString(str: string): string {\n  return str.split('').reverse().join('');\n}"
+    },
+    {
+      "id": "loop",
+      "label": "For Loop",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "description": "Using a simple for loop to build the reversed string",
+      "howItWorks": [
+        "Initialize an empty result string",
+        "Iterate through the string from end to start",
+        "Add each character to the result string"
+      ],
+      "advantages": [
+        "Straightforward implementation",
+        "No array operations",
+        "Easy to understand"
+      ],
+      "disadvantages": [
+        "Still requires O(n) space for the new string",
+        "String concatenation in a loop can be slow in some engines",
+        "More verbose than built-in methods"
+      ],
+      "jsCode": "function reverseString(str) {\n  let reversed = '';\n  for (let i = str.length - 1; i >= 0; i--) {\n    reversed += str[i];\n  }\n  return reversed;\n}",
+      "tsCode": "function reverseString(str: string): string {\n  let reversed: string = '';\n  for (let i: number = str.length - 1; i >= 0; i--) {\n    reversed += str[i];\n  }\n  return reversed;\n}"
+    },
+    {
+      "id": "reduce",
+      "label": "Reduce Method",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "description": "Using array reduce to build the reversed string",
+      "howItWorks": [
+        "Split string into array of characters",
+        "Use reduce to prepend each character to result",
+        "Each iteration adds current character before accumulated result"
+      ],
+      "advantages": [
+        "Functional programming approach",
+        "Clean and concise code",
+        "Good for learning reduce"
+      ],
+      "disadvantages": [
+        "Creates intermediate array",
+        "May be less intuitive for beginners",
+        "Multiple array operations"
+      ],
+      "jsCode": "function reverseString(str) {\n  return str.split('').reduce((rev, char) => char + rev, '');\n}",
+      "tsCode": "function reverseString(str: string): string {\n  return str.split('').reduce((rev: string, char: string) => char + rev, '');\n}"
+    },
+    {
+      "id": "recursion",
+      "label": "Recursion",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "description": "Using recursion to reverse the string",
+      "howItWorks": [
+        "Base case: return string if length is 0 or 1",
+        "Recursive case: reverse rest of string + first character",
+        "Each call processes one character and makes recursive call for rest"
+      ],
+      "advantages": [
+        "Elegant solution",
+        "Good for learning recursion",
+        "Works well for small strings"
+      ],
+      "disadvantages": [
+        "Stack overflow for very long strings",
+        "More complex than iterative solutions",
+        "Performance overhead from function calls"
+      ],
+      "jsCode": "function reverseString(str) {\n  if (str.length <= 1) return str;\n  return reverseString(str.slice(1)) + str[0];\n}",
+      "tsCode": "function reverseString(str: string): string {\n  if (str.length <= 1) return str;\n  return reverseString(str.slice(1)) + str[0];\n}"
+    }
+  ]
+}

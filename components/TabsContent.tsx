@@ -108,11 +108,6 @@ export default function TabsContent({
               )}
             </div>
           )}
-          {tab.description && !tab.complexity && (
-            <Typography className="text-base text-slate-300">
-              {tab.description}
-            </Typography>
-          )}
           {tab.content}
         </div>
       ))}

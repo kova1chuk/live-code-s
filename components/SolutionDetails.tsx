@@ -1,26 +1,45 @@
 import React from "react";
 import CodeBlock from "@/components/CodeBlock";
 import InfoSection from "@/components/InfoSection";
+import SectionBox from "@/components/SectionBox";
+import ComplexityInfo from "@/components/ComplexityInfo";
+import Typography from "@/components/Typography";
 
-interface SolutionContentProps {
+interface Complexity {
+  time: string;
+  space: string;
+}
+
+interface SolutionDetailsProps {
+  title: string;
+  complexity: Complexity;
+  code: string;
+  tsCode?: string;
   howItWorks: string[];
   advantages: string[];
   disadvantages: string[];
-  jsCode: string;
-  tsCode: string;
+  className?: string;
 }
 
-export default function SolutionContent({
+export default function SolutionDetails({
+  title,
+  complexity,
+  code,
+  tsCode = "",
   howItWorks,
   advantages,
   disadvantages,
-  jsCode,
-  tsCode,
-}: SolutionContentProps) {
+  className = "",
+}: SolutionDetailsProps) {
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${className}`}>
       <div className="space-y-6">
-        <CodeBlock jsCode={jsCode} tsCode={tsCode} />
+        <ComplexityInfo
+          time={complexity.time}
+          space={complexity.space}
+          description={title}
+        />
+        <CodeBlock jsCode={code} tsCode={tsCode} />
         <InfoSection title="How it works:" items={howItWorks} variant="info" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <InfoSection

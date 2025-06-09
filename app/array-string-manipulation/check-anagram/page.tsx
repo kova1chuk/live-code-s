@@ -4,9 +4,9 @@ import SectionBox from "@/components/SectionBox";
 import Typography from "@/components/Typography";
 import TabsContent from "@/components/TabsContent";
 import CodeEditor from "@/components/CodeEditor";
-import TestRunner from "@/components/TestRunner";
 import SolutionContent from "@/components/SolutionContent";
 import data from "@/features/array-string-manipulation/check-anagram/data.json";
+import AnagramTestRunner from "@/features/array-string-manipulation/components/AnagramTestRunner";
 
 export default function CheckAnagram() {
   const [input1, setInput1] = useState("");
@@ -70,10 +70,6 @@ export default function CheckAnagram() {
       label: "Try Yourself",
       description:
         "Write your own implementation of the anagram checker function",
-      complexity: {
-        time: "N/A",
-        space: "N/A",
-      },
       content: (
         <div className="space-y-6">
           <div className="space-y-4">
@@ -82,7 +78,11 @@ export default function CheckAnagram() {
             </Typography>
             <CodeEditor defaultValue={code} onChange={setCode} height="400px" />
           </div>
-          <TestRunner testCases={testCases} code={code} onRunTests={() => {}} />
+          <AnagramTestRunner
+            testCases={testCases}
+            code={code}
+            onRunTests={() => {}}
+          />
         </div>
       ),
     },
