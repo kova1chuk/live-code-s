@@ -1,20 +1,20 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export default function Queue() {
   const [inputStack, setInputStack] = useState<number[]>([]);
   const [outputStack, setOutputStack] = useState<number[]>([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [result, setResult] = useState<string | null>(null);
 
   const enqueue = (value: number) => {
-    setInputStack(prev => [...prev, value]);
+    setInputStack((prev) => [...prev, value]);
     setResult(`Enqueued ${value}`);
   };
 
   const dequeue = () => {
     if (inputStack.length === 0 && outputStack.length === 0) {
-      setResult('Queue is empty');
+      setResult("Queue is empty");
       return;
     }
 
@@ -23,20 +23,20 @@ export default function Queue() {
       const newOutputStack = [...inputStack].reverse();
       setOutputStack(newOutputStack);
       setInputStack([]);
-      
+
       const value = newOutputStack[newOutputStack.length - 1];
-      setOutputStack(prev => prev.slice(0, -1));
+      setOutputStack((prev) => prev.slice(0, -1));
       setResult(`Dequeued ${value}`);
     } else {
       const value = outputStack[outputStack.length - 1];
-      setOutputStack(prev => prev.slice(0, -1));
+      setOutputStack((prev) => prev.slice(0, -1));
       setResult(`Dequeued ${value}`);
     }
   };
 
   const peek = () => {
     if (inputStack.length === 0 && outputStack.length === 0) {
-      setResult('Queue is empty');
+      setResult("Queue is empty");
       return;
     }
 
@@ -52,24 +52,30 @@ export default function Queue() {
     const value = parseInt(input);
     if (!isNaN(value)) {
       enqueue(value);
-      setInput('');
+      setInput("");
     }
   };
 
   return (
     <div className="min-h-screen p-8">
       <main className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Implement a Queue using Two Stacks</h1>
-        
+        <h1 className="text-3xl font-bold mb-8">
+          Implement a Queue using Arrays
+        </h1>
+        <div className="mb-8 p-8 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 backdrop-blur-xl rounded-t-2xl border-t-4 border-t-blue-500/50 dark:border-t-blue-400/50 border-x border-b-4 border-x-blue-200/50 dark:border-x-blue-800/50 border-b-blue-500/50 dark:border-b-blue-400/50 shadow-xl overflow-hidden">
+          <p className="text-slate-800 dark:text-slate-200 text-lg sm:text-xl leading-relaxed">
+            Implement a queue data structure using arrays with the following
+            operations:
+          </p>
+        </div>
         <div className="space-y-8">
           <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Problem Description</h2>
-            <p className="mb-4">
-              Implement a queue data structure using two stacks with the following operations:
-            </p>
             <ul className="list-disc list-inside space-y-2">
               <li>enqueue: Add an element to the end of the queue</li>
-              <li>dequeue: Remove and return the front element from the queue</li>
+              <li>
+                dequeue: Remove and return the front element from the queue
+              </li>
               <li>peek: Return the front element without removing it</li>
               <li>isEmpty: Check if the queue is empty</li>
             </ul>
@@ -202,21 +208,28 @@ export default function Queue() {
             <div className="mt-4">
               <h3 className="font-semibold mb-2">Explanation:</h3>
               <ol className="list-decimal list-inside space-y-2">
-                <li>Implementation using Two Stacks:
+                <li>
+                  Implementation using Two Stacks:
                   <ul className="list-disc list-inside ml-4 mt-2">
                     <li>Input Stack: Used for enqueue operations</li>
                     <li>Output Stack: Used for dequeue operations</li>
-                    <li>When output stack is empty, transfer all elements from input stack</li>
+                    <li>
+                      When output stack is empty, transfer all elements from
+                      input stack
+                    </li>
                   </ul>
                 </li>
-                <li>Time Complexity:
+                <li>
+                  Time Complexity:
                   <ul className="list-disc list-inside ml-4 mt-2">
                     <li>Enqueue: O(1)</li>
                     <li>Dequeue: Amortized O(1)</li>
                     <li>Peek: O(1)</li>
                   </ul>
                 </li>
-                <li>Space Complexity: O(n) where n is the number of elements</li>
+                <li>
+                  Space Complexity: O(n) where n is the number of elements
+                </li>
               </ol>
             </div>
           </section>
@@ -224,4 +237,4 @@ export default function Queue() {
       </main>
     </div>
   );
-} 
+}

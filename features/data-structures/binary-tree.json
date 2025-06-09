@@ -1,0 +1,59 @@
+{
+  "title": "Binary Tree",
+  "description": "Implement a binary tree with basic operations: insert, search, and traversal methods (inorder, preorder, postorder).",
+  "examples": [
+    {
+      "input": "insert(5), insert(3), insert(7)",
+      "output": "Tree: 5\n     /   \\n    3     7"
+    },
+    {
+      "input": "inorder()",
+      "output": "3 -> 5 -> 7"
+    },
+    {
+      "input": "search(3)",
+      "output": "true"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "insert(5); insert(3); insert(7);",
+      "expected": "Tree: 5\n     /   \\n    3     7"
+    },
+    {
+      "input": "inorder();",
+      "expected": "3 -> 5 -> 7"
+    },
+    {
+      "input": "search(3);",
+      "expected": "true"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "binary-tree",
+      "label": "Binary Tree Implementation",
+      "description": "Implement a binary tree with basic operations and traversals.",
+      "complexity": {
+        "time": "O(h) for search/insert, O(n) for traversals",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Each node contains data and references to left and right children.",
+        "Insert operations maintain the binary search tree property.",
+        "Search operations traverse the tree based on value comparison.",
+        "Traversal methods visit nodes in different orders."
+      ],
+      "advantages": [
+        "Efficient search operations in balanced trees.",
+        "Natural ordering of elements."
+      ],
+      "disadvantages": [
+        "Can become unbalanced, leading to O(n) operations.",
+        "Extra space for node references."
+      ],
+      "jsCode": "class TreeNode {\n  constructor(val) {\n    this.val = val;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nclass BinaryTree {\n  constructor() {\n    this.root = null;\n  }\n\n  insert(val) {\n    const newNode = new TreeNode(val);\n    if (!this.root) {\n      this.root = newNode;\n      return;\n    }\n    let current = this.root;\n    while (true) {\n      if (val < current.val) {\n        if (!current.left) {\n          current.left = newNode;\n          break;\n        }\n        current = current.left;\n      } else {\n        if (!current.right) {\n          current.right = newNode;\n          break;\n        }\n        current = current.right;\n      }\n    }\n  }\n\n  search(val) {\n    let current = this.root;\n    while (current) {\n      if (val === current.val) return true;\n      if (val < current.val) {\n        current = current.left;\n      } else {\n        current = current.right;\n      }\n    }\n    return false;\n  }\n\n  inorder() {\n    const result = [];\n    const traverse = (node) => {\n      if (!node) return;\n      traverse(node.left);\n      result.push(node.val);\n      traverse(node.right);\n    };\n    traverse(this.root);\n    return result.join(\" -> \");\n  }\n\n  preorder() {\n    const result = [];\n    const traverse = (node) => {\n      if (!node) return;\n      result.push(node.val);\n      traverse(node.left);\n      traverse(node.right);\n    };\n    traverse(this.root);\n    return result.join(\" -> \");\n  }\n\n  postorder() {\n    const result = [];\n    const traverse = (node) => {\n      if (!node) return;\n      traverse(node.left);\n      traverse(node.right);\n      result.push(node.val);\n    };\n    traverse(this.root);\n    return result.join(\" -> \");\n  }\n}",
+      "tsCode": "class TreeNode<T> {\n  val: T;\n  left: TreeNode<T> | null;\n  right: TreeNode<T> | null;\n\n  constructor(val: T) {\n    this.val = val;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nclass BinaryTree<T> {\n  private root: TreeNode<T> | null;\n\n  constructor() {\n    this.root = null;\n  }\n\n  insert(val: T): void {\n    const newNode = new TreeNode(val);\n    if (!this.root) {\n      this.root = newNode;\n      return;\n    }\n    let current = this.root;\n    while (true) {\n      if (val < current.val) {\n        if (!current.left) {\n          current.left = newNode;\n          break;\n        }\n        current = current.left;\n      } else {\n        if (!current.right) {\n          current.right = newNode;\n          break;\n        }\n        current = current.right;\n      }\n    }\n  }\n\n  search(val: T): boolean {\n    let current = this.root;\n    while (current) {\n      if (val === current.val) return true;\n      if (val < current.val) {\n        current = current.left;\n      } else {\n        current = current.right;\n      }\n    }\n    return false;\n  }\n\n  inorder(): string {\n    const result: T[] = [];\n    const traverse = (node: TreeNode<T> | null) => {\n      if (!node) return;\n      traverse(node.left);\n      result.push(node.val);\n      traverse(node.right);\n    };\n    traverse(this.root);\n    return result.join(\" -> \");\n  }\n\n  preorder(): string {\n    const result: T[] = [];\n    const traverse = (node: TreeNode<T> | null) => {\n      if (!node) return;\n      result.push(node.val);\n      traverse(node.left);\n      traverse(node.right);\n    };\n    traverse(this.root);\n    return result.join(\" -> \");\n  }\n\n  postorder(): string {\n    const result: T[] = [];\n    const traverse = (node: TreeNode<T> | null) => {\n      if (!node) return;\n      traverse(node.left);\n      traverse(node.right);\n      result.push(node.val);\n    };\n    traverse(this.root);\n    return result.join(\" -> \");\n  }\n}"
+    }
+  ]
+}

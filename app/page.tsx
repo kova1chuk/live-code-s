@@ -100,13 +100,69 @@ export default function Home() {
 
           <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Data Structures</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              Practice classic data structure problems and implementations
+              through interactive challenges
+            </p>
+            <div className="mb-2 font-semibold text-blue-700 dark:text-blue-300">
+              Fundamental Structures
+            </div>
+            <ul className="space-y-2 mb-4">
+              <li>
+                <Link
+                  href="/data-structures/linked-list"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  Linked List
+                  <span className="ml-2 text-xs text-gray-500">Medium</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/data-structures/binary-tree"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  Binary Tree
+                  <span className="ml-2 text-xs text-gray-500">Medium</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/data-structures/graph"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  Graph <span className="ml-2 text-xs text-gray-500">Hard</span>
+                </Link>
+              </li>
+            </ul>
+            <div className="mb-2 font-semibold text-blue-700 dark:text-blue-300">
+              Core Structures
+            </div>
             <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/data-structures/hash-table"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  Hash Table{" "}
+                  <span className="ml-2 text-xs text-gray-500">Medium</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/data-structures/stack-queue"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  Stack & Queue{" "}
+                  <span className="ml-2 text-xs text-gray-500">Easy</span>
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/data-structures/stack"
                   className="text-blue-500 hover:text-blue-600"
                 >
-                  Implement a stack using arrays
+                  Stack <span className="ml-2 text-xs text-gray-500">Easy</span>
                 </Link>
               </li>
               <li>
@@ -114,23 +170,7 @@ export default function Home() {
                   href="/data-structures/queue"
                   className="text-blue-500 hover:text-blue-600"
                 >
-                  Implement a queue using two stacks
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/data-structures/validate-parentheses"
-                  className="text-blue-500 hover:text-blue-600"
-                >
-                  Validate parentheses
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/data-structures/lru-cache"
-                  className="text-blue-500 hover:text-blue-600"
-                >
-                  LRU Cache
+                  Queue <span className="ml-2 text-xs text-gray-500">Easy</span>
                 </Link>
               </li>
               <li>
@@ -138,7 +178,26 @@ export default function Home() {
                   href="/data-structures/hashmap"
                   className="text-blue-500 hover:text-blue-600"
                 >
-                  Design a HashMap (or Set)
+                  HashMap{" "}
+                  <span className="ml-2 text-xs text-gray-500">Medium</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/data-structures/lru-cache"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  LRU Cache{" "}
+                  <span className="ml-2 text-xs text-gray-500">Medium</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/data-structures/validate-parentheses"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  Validate Parentheses{" "}
+                  <span className="ml-2 text-xs text-gray-500">Easy</span>
                 </Link>
               </li>
             </ul>

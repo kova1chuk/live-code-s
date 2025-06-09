@@ -1,9 +1,9 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export default function HashMap() {
-  const [key, setKey] = useState<string>('');
-  const [value, setValue] = useState<string>('');
+  const [key, setKey] = useState<string>("");
+  const [value, setValue] = useState<string>("");
   const [map, setMap] = useState<Map<string, string>>(new Map());
   const [result, setResult] = useState<string | null>(null);
   const [operations, setOperations] = useState<string[]>([]);
@@ -12,26 +12,26 @@ export default function HashMap() {
     const newMap = new Map(map);
     newMap.set(key, value);
     setMap(newMap);
-    setOperations(prev => [...prev, `PUT(${key}, ${value})`]);
+    setOperations((prev) => [...prev, `PUT(${key}, ${value})`]);
     setResult(`Added key ${key} with value ${value}`);
   };
 
   const get = (key: string) => {
     if (!map.has(key)) {
       setResult(`Key ${key} not found`);
-      setOperations(prev => [...prev, `GET(${key}) -> null`]);
+      setOperations((prev) => [...prev, `GET(${key}) -> null`]);
       return;
     }
 
     const value = map.get(key);
     setResult(`Value for key ${key}: ${value}`);
-    setOperations(prev => [...prev, `GET(${key}) -> ${value}`]);
+    setOperations((prev) => [...prev, `GET(${key}) -> ${value}`]);
   };
 
   const remove = (key: string) => {
     if (!map.has(key)) {
       setResult(`Key ${key} not found`);
-      setOperations(prev => [...prev, `REMOVE(${key}) -> false`]);
+      setOperations((prev) => [...prev, `REMOVE(${key}) -> false`]);
       return;
     }
 
@@ -39,15 +39,15 @@ export default function HashMap() {
     newMap.delete(key);
     setMap(newMap);
     setResult(`Removed key ${key}`);
-    setOperations(prev => [...prev, `REMOVE(${key}) -> true`]);
+    setOperations((prev) => [...prev, `REMOVE(${key}) -> true`]);
   };
 
   const handlePut = (e: React.FormEvent) => {
     e.preventDefault();
     if (key && value) {
       put(key, value);
-      setKey('');
-      setValue('');
+      setKey("");
+      setValue("");
     }
   };
 
@@ -55,7 +55,7 @@ export default function HashMap() {
     e.preventDefault();
     if (key) {
       get(key);
-      setKey('');
+      setKey("");
     }
   };
 
@@ -63,25 +63,28 @@ export default function HashMap() {
     e.preventDefault();
     if (key) {
       remove(key);
-      setKey('');
+      setKey("");
     }
   };
 
   return (
     <div className="min-h-screen p-8">
       <main className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">HashMap Implementation</h1>
-        
+        <h1 className="text-3xl font-bold mb-8">Design a HashMap (or Set)</h1>
+        <div className="mb-8 p-8 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 backdrop-blur-xl rounded-t-2xl border-t-4 border-t-blue-500/50 dark:border-t-blue-400/50 border-x border-b-4 border-x-blue-200/50 dark:border-x-blue-800/50 border-b-blue-500/50 dark:border-b-blue-400/50 shadow-xl overflow-hidden">
+          <p className="text-slate-800 dark:text-slate-200 text-lg sm:text-xl leading-relaxed">
+            Implement a HashMap (or Set) data structure with basic operations:
+            put, get, remove, contains.
+          </p>
+        </div>
         <div className="space-y-8">
           <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Problem Description</h2>
-            <p className="mb-4">
-              Design and implement a HashMap data structure. It should support the following operations:
-            </p>
             <ul className="list-disc list-inside space-y-2">
-              <li>put(key, value): Insert a (key, value) pair into the HashMap</li>
-              <li>get(key): Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key</li>
-              <li>remove(key): Removes the mapping for the specified key if the map contains the mapping for the key</li>
+              <li>put: Insert a key-value pair</li>
+              <li>get: Retrieve the value for a key</li>
+              <li>remove: Remove a key-value pair</li>
+              <li>contains: Check if a key exists</li>
             </ul>
             <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded mt-4">
               <h3 className="font-semibold mb-2">Example:</h3>
@@ -167,7 +170,10 @@ export default function HashMap() {
                   <p className="font-semibold mb-2">Current HashMap:</p>
                   <div className="space-y-2">
                     {Array.from(map.entries()).map(([k, v]) => (
-                      <div key={k} className="flex justify-between items-center">
+                      <div
+                        key={k}
+                        className="flex justify-between items-center"
+                      >
                         <span className="font-mono">{k}</span>
                         <span className="font-mono">→</span>
                         <span className="font-mono">{v}</span>
@@ -183,7 +189,9 @@ export default function HashMap() {
                   <p className="font-semibold mb-2">Operations:</p>
                   <div className="space-y-1">
                     {operations.map((op, index) => (
-                      <p key={index} className="font-mono text-sm">{op}</p>
+                      <p key={index} className="font-mono text-sm">
+                        {op}
+                      </p>
                     ))}
                   </div>
                 </div>
@@ -217,21 +225,26 @@ export default function HashMap() {
             <div className="mt-4">
               <h3 className="font-semibold mb-2">Explanation:</h3>
               <ol className="list-decimal list-inside space-y-2">
-                <li>Implementation using Map:
+                <li>
+                  Implementation using Map:
                   <ul className="list-disc list-inside ml-4 mt-2">
                     <li>JavaScript's built-in Map provides O(1) operations</li>
                     <li>Handles collisions automatically</li>
                     <li>Supports any type of keys and values</li>
                   </ul>
                 </li>
-                <li>Time Complexity:
+                <li>
+                  Time Complexity:
                   <ul className="list-disc list-inside ml-4 mt-2">
                     <li>put: O(1)</li>
                     <li>get: O(1)</li>
                     <li>remove: O(1)</li>
                   </ul>
                 </li>
-                <li>Space Complexity: O(n) where n is the number of key-value pairs</li>
+                <li>
+                  Space Complexity: O(n) where n is the number of key-value
+                  pairs
+                </li>
               </ol>
             </div>
           </section>
@@ -239,4 +252,4 @@ export default function HashMap() {
       </main>
     </div>
   );
-} 
+}

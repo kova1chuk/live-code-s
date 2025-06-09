@@ -1,0 +1,57 @@
+{
+  "title": "Hash Table",
+  "description": "Implement a hash table with basic operations: put, get, remove, and collision handling using chaining.",
+  "examples": [
+    {
+      "input": "put('key1', 'value1'), put('key2', 'value2')",
+      "output": "HashTable: { key1: 'value1', key2: 'value2' }"
+    },
+    {
+      "input": "get('key1')",
+      "output": "value1"
+    },
+    {
+      "input": "remove('key1')",
+      "output": "true"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "put('key1', 'value1'); put('key2', 'value2');",
+      "expected": "HashTable: { key1: 'value1', key2: 'value2' }"
+    },
+    {
+      "input": "get('key1');",
+      "expected": "value1"
+    },
+    {
+      "input": "remove('key1');",
+      "expected": "true"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "hash-table",
+      "label": "Hash Table Implementation",
+      "description": "Implement a hash table with chaining for collision resolution.",
+      "complexity": {
+        "time": "O(1) average case, O(n) worst case",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Use an array of linked lists to store key-value pairs.",
+        "Hash function maps keys to array indices.",
+        "Chaining handles collisions by storing multiple items at the same index.",
+        "Load factor determines when to resize the table."
+      ],
+      "advantages": [
+        "Fast average case operations.",
+        "Handles collisions gracefully."
+      ],
+      "disadvantages": [
+        "Worst case can degrade to O(n).",
+        "Extra space for collision chains."
+      ]
+    }
+  ]
+}

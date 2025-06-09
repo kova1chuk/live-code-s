@@ -1,0 +1,59 @@
+{
+  "title": "Stack & Queue",
+  "description": "Compare and implement both stack and queue data structures, understanding their differences and use cases.",
+  "examples": [
+    {
+      "input": "Stack: push(1), push(2), pop()",
+      "output": "2"
+    },
+    {
+      "input": "Queue: enqueue(1), enqueue(2), dequeue()",
+      "output": "1"
+    },
+    {
+      "input": "Compare LIFO vs FIFO",
+      "output": "Stack: Last In First Out\nQueue: First In First Out"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "Stack: push(1); push(2); pop();",
+      "expected": "2"
+    },
+    {
+      "input": "Queue: enqueue(1); enqueue(2); dequeue();",
+      "expected": "1"
+    },
+    {
+      "input": "Compare: Stack vs Queue",
+      "expected": "Stack: LIFO\nQueue: FIFO"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "stack-queue",
+      "label": "Stack and Queue Implementation",
+      "description": "Implement both stack and queue data structures and compare their operations.",
+      "complexity": {
+        "time": "O(1) for all operations",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Stack: Last In First Out (LIFO) - elements are added and removed from the same end.",
+        "Queue: First In First Out (FIFO) - elements are added at one end and removed from the other.",
+        "Both can be implemented using arrays or linked lists.",
+        "Stack operations: push (add), pop (remove), peek (view top).",
+        "Queue operations: enqueue (add), dequeue (remove), peek (view front)."
+      ],
+      "advantages": [
+        "Simple to implement and understand.",
+        "Efficient operations with O(1) time complexity.",
+        "Widely used in many algorithms and applications."
+      ],
+      "disadvantages": [
+        "Limited access to elements (only top/front).",
+        "Fixed size if using array implementation."
+      ]
+    }
+  ]
+}

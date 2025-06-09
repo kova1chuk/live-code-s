@@ -1,26 +1,29 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export default function ValidateParentheses() {
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState<{ isValid: boolean; explanation: string } | null>(null);
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState<{
+    isValid: boolean;
+    explanation: string;
+  } | null>(null);
 
   const validateParentheses = (str: string) => {
     const stack: string[] = [];
     const pairs: { [key: string]: string } = {
-      ')': '(',
-      '}': '{',
-      ']': '['
+      ")": "(",
+      "}": "{",
+      "]": "[",
     };
 
-    for (let char of str) {
-      if (char === '(' || char === '{' || char === '[') {
+    for (const char of str) {
+      if (char === "(" || char === "{" || char === "[") {
         stack.push(char);
-      } else if (char === ')' || char === '}' || char === ']') {
+      } else if (char === ")" || char === "}" || char === "]") {
         if (stack.length === 0 || stack.pop() !== pairs[char]) {
           return {
             isValid: false,
-            explanation: `Invalid: Closing '${char}' without matching opening bracket`
+            explanation: `Invalid: Closing '${char}' without matching opening bracket`,
           };
         }
       }
@@ -29,13 +32,13 @@ export default function ValidateParentheses() {
     if (stack.length > 0) {
       return {
         isValid: false,
-        explanation: `Invalid: Unclosed '${stack[stack.length - 1]}'`
+        explanation: `Invalid: Unclosed '${stack[stack.length - 1]}'`,
       };
     }
 
     return {
       isValid: true,
-      explanation: 'Valid: All parentheses are properly closed'
+      explanation: "Valid: All parentheses are properly closed",
     };
   };
 
@@ -48,19 +51,36 @@ export default function ValidateParentheses() {
     <div className="min-h-screen p-8">
       <main className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">Validate Parentheses</h1>
-        
+        <div className="mb-8 p-8 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 backdrop-blur-xl rounded-t-2xl border-t-4 border-t-blue-500/50 dark:border-t-blue-400/50 border-x border-b-4 border-x-blue-200/50 dark:border-x-blue-800/50 border-b-blue-500/50 dark:border-b-blue-400/50 shadow-xl overflow-hidden">
+          <p className="text-slate-800 dark:text-slate-200 text-lg sm:text-xl leading-relaxed">
+            Given a string containing just the characters '(', ')', '{", "}',
+            '[' and ']', determine if the input string is valid. An input string
+            is valid if: Open brackets must be closed by the same type of
+            brackets. Open brackets must be closed in the correct order.
+          </p>
+        </div>
         <div className="space-y-8">
           <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Problem Description</h2>
-            <p className="mb-4">
-              Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>
+                Input: A string containing only '(', ')', '{", "}', '[' and ']'
+              </li>
+              <li>
+                Output: true if the input string is valid, false otherwise
+              </li>
+            </ul>
             <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded">
               <h3 className="font-semibold mb-2">Rules:</h3>
               <ul className="list-disc list-inside space-y-2">
-                <li>Open brackets must be closed by the same type of brackets</li>
+                <li>
+                  Open brackets must be closed by the same type of brackets
+                </li>
                 <li>Open brackets must be closed in the correct order</li>
-                <li>Every closing bracket has a corresponding opening bracket of the same type</li>
+                <li>
+                  Every closing bracket has a corresponding opening bracket of
+                  the same type
+                </li>
               </ul>
               <h3 className="font-semibold mt-4 mb-2">Examples:</h3>
               <p>Input: "()"</p>
@@ -76,7 +96,9 @@ export default function ValidateParentheses() {
             <h2 className="text-xl font-semibold mb-4">Try it out</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="input" className="block mb-2">Enter a string of parentheses:</label>
+                <label htmlFor="input" className="block mb-2">
+                  Enter a string of parentheses:
+                </label>
                 <input
                   type="text"
                   id="input"
@@ -94,7 +116,13 @@ export default function ValidateParentheses() {
               </button>
             </form>
             {result && (
-              <div className={`mt-4 p-4 rounded ${result.isValid ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900'}`}>
+              <div
+                className={`mt-4 p-4 rounded ${
+                  result.isValid
+                    ? "bg-green-100 dark:bg-green-900"
+                    : "bg-red-100 dark:bg-red-900"
+                }`}
+              >
                 <p className="font-semibold">Result:</p>
                 <p>{result.explanation}</p>
               </div>
@@ -128,16 +156,30 @@ export default function ValidateParentheses() {
             <div className="mt-4">
               <h3 className="font-semibold mb-2">Explanation:</h3>
               <ol className="list-decimal list-inside space-y-2">
-                <li>Using a Stack:
+                <li>
+                  Using a Stack:
                   <ul className="list-disc list-inside ml-4 mt-2">
                     <li>Push opening brackets onto the stack</li>
-                    <li>When encountering a closing bracket, check if it matches the top of the stack</li>
-                    <li>If it matches, pop the opening bracket from the stack</li>
-                    <li>If it doesn't match or stack is empty, the string is invalid</li>
+                    <li>
+                      When encountering a closing bracket, check if it matches
+                      the top of the stack
+                    </li>
+                    <li>
+                      If it matches, pop the opening bracket from the stack
+                    </li>
+                    <li>
+                      If it doesn't match or stack is empty, the string is
+                      invalid
+                    </li>
                   </ul>
                 </li>
-                <li>Time Complexity: O(n) where n is the length of the string</li>
-                <li>Space Complexity: O(n) in worst case when all characters are opening brackets</li>
+                <li>
+                  Time Complexity: O(n) where n is the length of the string
+                </li>
+                <li>
+                  Space Complexity: O(n) in worst case when all characters are
+                  opening brackets
+                </li>
               </ol>
             </div>
           </section>
@@ -145,4 +187,4 @@ export default function ValidateParentheses() {
       </main>
     </div>
   );
-} 
+}

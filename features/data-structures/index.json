@@ -1,0 +1,51 @@
+{
+  "title": "Data Structures",
+  "description": "Practice implementing fundamental data structures and understanding their operations and use cases.",
+  "challenges": [
+    {
+      "id": "linked-list",
+      "title": "Linked List",
+      "path": "/data-structures/linked-list",
+      "difficulty": "Medium",
+      "description": "Implement a singly linked list with basic operations: insert, delete, search, and reverse."
+    },
+    {
+      "id": "binary-tree",
+      "title": "Binary Tree",
+      "path": "/data-structures/binary-tree",
+      "difficulty": "Medium",
+      "description": "Implement a binary tree with basic operations: insert, search, and traversal methods."
+    },
+    {
+      "id": "graph",
+      "title": "Graph",
+      "path": "/data-structures/graph",
+      "difficulty": "Hard",
+      "description": "Implement a graph data structure with basic operations: add vertex, add edge, and traversal methods."
+    },
+    {
+      "id": "hash-table",
+      "title": "Hash Table",
+      "path": "/data-structures/hash-table",
+      "difficulty": "Medium",
+      "description": "Implement a hash table with basic operations: put, get, remove, and collision handling."
+    },
+    {
+      "id": "stack-queue",
+      "title": "Stack & Queue",
+      "path": "/data-structures/stack-queue",
+      "difficulty": "Easy",
+      "description": "Compare and implement both stack and queue data structures, understanding their differences."
+    }
+  ],
+  "categories": [
+    {
+      "name": "Fundamental Structures",
+      "challenges": ["linked-list", "binary-tree", "graph"]
+    },
+    {
+      "name": "Core Structures",
+      "challenges": ["hash-table", "stack-queue"]
+    }
+  ]
+}

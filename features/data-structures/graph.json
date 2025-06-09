@@ -1,0 +1,60 @@
+{
+  "title": "Graph",
+  "description": "Implement a graph data structure with basic operations: add vertex, add edge, and traversal methods (BFS, DFS).",
+  "examples": [
+    {
+      "input": "addVertex('A'), addVertex('B'), addEdge('A', 'B')",
+      "output": "Graph: A -> B"
+    },
+    {
+      "input": "bfs('A')",
+      "output": "A -> B"
+    },
+    {
+      "input": "dfs('A')",
+      "output": "A -> B"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "addVertex('A'); addVertex('B'); addEdge('A', 'B');",
+      "expected": "Graph: A -> B"
+    },
+    {
+      "input": "bfs('A');",
+      "expected": "A -> B"
+    },
+    {
+      "input": "dfs('A');",
+      "expected": "A -> B"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "adjacency-list",
+      "label": "Adjacency List Implementation",
+      "description": "Implement a graph using an adjacency list representation.",
+      "complexity": {
+        "time": "O(V + E) for traversals, O(1) for add operations",
+        "space": "O(V + E)"
+      },
+      "howItWorks": [
+        "Use a Map to store vertices and their adjacent vertices.",
+        "Add vertex creates a new entry in the map.",
+        "Add edge adds vertices to each other's adjacency lists.",
+        "BFS uses a queue to visit vertices level by level.",
+        "DFS uses recursion or a stack to visit vertices depth-first."
+      ],
+      "advantages": [
+        "Space efficient for sparse graphs.",
+        "Fast to iterate over edges."
+      ],
+      "disadvantages": [
+        "Slower to check if an edge exists.",
+        "More complex to implement than adjacency matrix."
+      ],
+      "jsCode": "class Graph {\n  constructor() {\n    this.vertices = new Map();\n  }\n\n  addVertex(vertex) {\n    if (!this.vertices.has(vertex)) {\n      this.vertices.set(vertex, []);\n    }\n  }\n\n  addEdge(vertex1, vertex2) {\n    if (!this.vertices.has(vertex1) || !this.vertices.has(vertex2)) {\n      return;\n    }\n    this.vertices.get(vertex1).push(vertex2);\n    this.vertices.get(vertex2).push(vertex1);\n  }\n\n  bfs(startVertex) {\n    if (!this.vertices.has(startVertex)) return [];\n    \n    const visited = new Set();\n    const queue = [startVertex];\n    const result = [];\n    \n    visited.add(startVertex);\n    \n    while (queue.length > 0) {\n      const vertex = queue.shift();\n      result.push(vertex);\n      \n      for (const neighbor of this.vertices.get(vertex)) {\n        if (!visited.has(neighbor)) {\n          visited.add(neighbor);\n          queue.push(neighbor);\n        }\n      }\n    }\n    \n    return result.join(\" -> \");\n  }\n\n  dfs(startVertex) {\n    if (!this.vertices.has(startVertex)) return [];\n    \n    const visited = new Set();\n    const result = [];\n    \n    const traverse = (vertex) => {\n      visited.add(vertex);\n      result.push(vertex);\n      \n      for (const neighbor of this.vertices.get(vertex)) {\n        if (!visited.has(neighbor)) {\n          traverse(neighbor);\n        }\n      }\n    };\n    \n    traverse(startVertex);\n    return result.join(\" -> \");\n  }\n}",
+      "tsCode": "class Graph {\n  private vertices: Map<string, string[]>;\n\n  constructor() {\n    this.vertices = new Map();\n  }\n\n  addVertex(vertex: string): void {\n    if (!this.vertices.has(vertex)) {\n      this.vertices.set(vertex, []);\n    }\n  }\n\n  addEdge(vertex1: string, vertex2: string): void {\n    if (!this.vertices.has(vertex1) || !this.vertices.has(vertex2)) {\n      return;\n    }\n    this.vertices.get(vertex1)!.push(vertex2);\n    this.vertices.get(vertex2)!.push(vertex1);\n  }\n\n  bfs(startVertex: string): string {\n    if (!this.vertices.has(startVertex)) return \"\";\n    \n    const visited = new Set<string>();\n    const queue: string[] = [startVertex];\n    const result: string[] = [];\n    \n    visited.add(startVertex);\n    \n    while (queue.length > 0) {\n      const vertex = queue.shift()!;\n      result.push(vertex);\n      \n      for (const neighbor of this.vertices.get(vertex)!) {\n        if (!visited.has(neighbor)) {\n          visited.add(neighbor);\n          queue.push(neighbor);\n        }\n      }\n    }\n    \n    return result.join(\" -> \");\n  }\n\n  dfs(startVertex: string): string {\n    if (!this.vertices.has(startVertex)) return \"\";\n    \n    const visited = new Set<string>();\n    const result: string[] = [];\n    \n    const traverse = (vertex: string) => {\n      visited.add(vertex);\n      result.push(vertex);\n      \n      for (const neighbor of this.vertices.get(vertex)!) {\n        if (!visited.has(neighbor)) {\n          traverse(neighbor);\n        }\n      }\n    };\n    \n    traverse(startVertex);\n    return result.join(\" -> \");\n  }\n}"
+    }
+  ]
+}

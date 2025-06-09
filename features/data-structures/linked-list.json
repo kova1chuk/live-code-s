@@ -1,0 +1,57 @@
+{
+  "title": "Linked List",
+  "description": "Implement a singly linked list with basic operations: insert, delete, search, and reverse.",
+  "examples": [
+    {
+      "input": "insert(1), insert(2), insert(3)",
+      "output": "1 -> 2 -> 3 -> null"
+    },
+    {
+      "input": "delete(2)",
+      "output": "1 -> 3 -> null"
+    },
+    {
+      "input": "reverse()",
+      "output": "3 -> 1 -> null"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "insert(1); insert(2); insert(3);",
+      "expected": "1 -> 2 -> 3 -> null"
+    },
+    {
+      "input": "delete(2);",
+      "expected": "1 -> 3 -> null"
+    },
+    {
+      "input": "reverse();",
+      "expected": "3 -> 1 -> null"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "singly-linked",
+      "label": "Singly Linked List Implementation",
+      "description": "Implement a singly linked list with basic operations.",
+      "complexity": {
+        "time": "O(n) for search/delete, O(1) for insert",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Each node contains data and a reference to the next node.",
+        "Insert operations add nodes at the beginning for O(1) time.",
+        "Search and delete operations require traversing the list.",
+        "Reverse operation changes the direction of all pointers."
+      ],
+      "advantages": [
+        "Dynamic size - no need to pre-allocate space.",
+        "Efficient insertions and deletions at the beginning."
+      ],
+      "disadvantages": [
+        "No random access - must traverse from the beginning.",
+        "Extra space for node references."
+      ]
+    }
+  ]
+}
