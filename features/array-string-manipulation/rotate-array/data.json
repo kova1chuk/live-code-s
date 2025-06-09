@@ -1,0 +1,152 @@
+{
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4,5,6,7], k = 3",
+      "output": "Result: [5,6,7,1,2,3,4]"
+    },
+    {
+      "input": "nums = [-1,-100,3,99], k = 2",
+      "output": "Result: [3,99,-1,-100]"
+    },
+    {
+      "input": "nums = [1,2], k = 3",
+      "output": "Result: [2,1]"
+    }
+  ],
+  "testCases": [
+    {
+      "input": {
+        "nums": [1, 2, 3, 4, 5, 6, 7],
+        "k": 3
+      },
+      "expected": [5, 6, 7, 1, 2, 3, 4],
+      "description": "Basic case with positive numbers"
+    },
+    {
+      "input": {
+        "nums": [-1, -100, 3, 99],
+        "k": 2
+      },
+      "expected": [3, 99, -1, -100],
+      "description": "Array with negative numbers"
+    },
+    {
+      "input": {
+        "nums": [1, 2],
+        "k": 3
+      },
+      "expected": [2, 1],
+      "description": "k greater than array length"
+    },
+    {
+      "input": {
+        "nums": [1],
+        "k": 0
+      },
+      "expected": [1],
+      "description": "Single element array"
+    },
+    {
+      "input": {
+        "nums": [1, 2, 3],
+        "k": 4
+      },
+      "expected": [3, 1, 2],
+      "description": "k greater than array length"
+    },
+    {
+      "input": {
+        "nums": [],
+        "k": 1
+      },
+      "expected": [],
+      "description": "Empty array"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "reverse",
+      "label": "Reverse Method",
+      "description": "Using array reversal to rotate elements",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Normalize k to be within array length using modulo",
+        "Reverse entire array",
+        "Reverse first k elements",
+        "Reverse remaining elements",
+        "This effectively rotates array by k positions"
+      ],
+      "advantages": [
+        "In-place rotation (O(1) space)",
+        "Simple to understand and implement",
+        "Works with any array size and k value",
+        "Optimal time complexity"
+      ],
+      "disadvantages": [
+        "Requires multiple array reversals",
+        "May not be as intuitive at first glance"
+      ],
+      "jsCode": "function rotate(nums, k) {\n  k = k % nums.length; // Normalize k\n  \n  // Helper function to reverse array portion\n  function reverse(arr, start, end) {\n    while (start < end) {\n      [arr[start], arr[end]] = [arr[end], arr[start]];\n      start++;\n      end--;\n    }\n  }\n  \n  // Reverse entire array\n  reverse(nums, 0, nums.length - 1);\n  // Reverse first k elements\n  reverse(nums, 0, k - 1);\n  // Reverse remaining elements\n  reverse(nums, k, nums.length - 1);\n  \n  return nums;\n}",
+      "tsCode": "function rotate(nums: number[], k: number): number[] {\n  k = k % nums.length; // Normalize k\n  \n  // Helper function to reverse array portion\n  function reverse(arr: number[], start: number, end: number): void {\n    while (start < end) {\n      [arr[start], arr[end]] = [arr[end], arr[start]];\n      start++;\n      end--;\n    }\n  }\n  \n  // Reverse entire array\n  reverse(nums, 0, nums.length - 1);\n  // Reverse first k elements\n  reverse(nums, 0, k - 1);\n  // Reverse remaining elements\n  reverse(nums, k, nums.length - 1);\n  \n  return nums;\n}"
+    },
+    {
+      "id": "cyclic",
+      "label": "Cyclic Replacements",
+      "description": "Moving elements to their final positions in cycles",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      },
+      "howItWorks": [
+        "Start from each position and move elements in cycles",
+        "Calculate next position using (current + k) % length",
+        "Keep track of start position and count of moves",
+        "Continue until all elements are moved"
+      ],
+      "advantages": [
+        "In-place rotation",
+        "Single pass through array",
+        "No extra space needed",
+        "Each element moved exactly once"
+      ],
+      "disadvantages": [
+        "More complex implementation",
+        "Harder to understand the logic",
+        "Requires careful handling of cycles"
+      ],
+      "jsCode": "function rotate(nums, k) {\n  k = k % nums.length;\n  let count = 0;\n  \n  for (let start = 0; count < nums.length; start++) {\n    let current = start;\n    let prev = nums[start];\n    \n    do {\n      let next = (current + k) % nums.length;\n      let temp = nums[next];\n      nums[next] = prev;\n      prev = temp;\n      current = next;\n      count++;\n    } while (start !== current);\n  }\n  \n  return nums;\n}",
+      "tsCode": "function rotate(nums: number[], k: number): number[] {\n  k = k % nums.length;\n  let count = 0;\n  \n  for (let start = 0; count < nums.length; start++) {\n    let current = start;\n    let prev = nums[start];\n    \n    do {\n      let next = (current + k) % nums.length;\n      let temp = nums[next];\n      nums[next] = prev;\n      prev = temp;\n      current = next;\n      count++;\n    } while (start !== current);\n  }\n  \n  return nums;\n}"
+    },
+    {
+      "id": "extra-array",
+      "label": "Extra Array",
+      "description": "Using additional array to store rotated elements",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "howItWorks": [
+        "Create new array of same size",
+        "Calculate new position for each element: (i + k) % length",
+        "Copy elements to new positions",
+        "Copy back to original array"
+      ],
+      "advantages": [
+        "Simple and straightforward",
+        "Easy to understand and implement",
+        "Good for learning array indexing"
+      ],
+      "disadvantages": [
+        "Uses extra space O(n)",
+        "Not in-place solution",
+        "Additional array copy needed"
+      ],
+      "jsCode": "function rotate(nums, k) {\n  const n = nums.length;\n  k = k % n;\n  \n  const rotated = new Array(n);\n  \n  for (let i = 0; i < n; i++) {\n    rotated[(i + k) % n] = nums[i];\n  }\n  \n  // Copy back to original array\n  for (let i = 0; i < n; i++) {\n    nums[i] = rotated[i];\n  }\n  \n  return nums;\n}",
+      "tsCode": "function rotate(nums: number[], k: number): number[] {\n  const n = nums.length;\n  k = k % n;\n  \n  const rotated = new Array(n);\n  \n  for (let i = 0; i < n; i++) {\n    rotated[(i + k) % n] = nums[i];\n  }\n  \n  // Copy back to original array\n  for (let i = 0; i < n; i++) {\n    nums[i] = rotated[i];\n  }\n  \n  return nums;\n}"
+    }
+  ],
+  "initialCode": "function rotate(nums, k) {\n  // Write your code here\n}"
+}
