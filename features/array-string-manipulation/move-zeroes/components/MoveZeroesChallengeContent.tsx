@@ -1,8 +1,8 @@
 import React from "react";
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 import SectionBox from "@/components/SectionBox";
 import TabsContent from "@/components/TabsContent";
-import CodeEditor from "@/components/CodeEditor";
+import CodeEditor from "@/components/ui/CodeEditor";
 import ExampleCard from "@/components/ExampleCard";
 import SolutionDetails from "@/components/SolutionDetails";
 

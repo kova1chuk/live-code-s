@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import MoveZeroesChallengeContent from "@/features/array-string-manipulation/components/MoveZeroesChallengeContent";
-import MoveZeroesTestRunner from "@/features/array-string-manipulation/components/MoveZeroesTestRunner";
+import MoveZeroesChallengeContent from "@/features/array-string-manipulation/move-zeroes/components/MoveZeroesChallengeContent";
+import MoveZeroesTestRunner from "@/features/array-string-manipulation/move-zeroes/components/MoveZeroesTestRunner";
 import data from "@/features/array-string-manipulation/move-zeroes/data.json";
 
 export default function MoveZeroes() {

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import RotateArrayChallengeContent from "@/features/array-string-manipulation/components/RotateArrayChallengeContent";
-import RotateArrayTestRunner from "@/features/array-string-manipulation/components/RotateArrayTestRunner";
+import RotateArrayChallengeContent from "@/features/array-string-manipulation/rotate-array/components/RotateArrayChallengeContent";
+import RotateArrayTestRunner from "@/features/array-string-manipulation/rotate-array/components/RotateArrayTestRunner";
 import data from "@/features/array-string-manipulation/rotate-array/data.json";
 
 export default function RotateArray() {

@@ -1,4 +1,4 @@
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 import ChallengeCard from "@/components/ChallengeCard";
 
 export default function DataStructures() {

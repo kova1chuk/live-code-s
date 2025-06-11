@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import FlattenArrayChallengeContent from "@/features/array-string-manipulation/components/FlattenArrayChallengeContent";
-import FlattenArrayTestRunner from "@/features/array-string-manipulation/components/FlattenArrayTestRunner";
+import FlattenArrayChallengeContent from "@/features/array-string-manipulation/flatten-array/components/FlattenArrayChallengeContent";
+import FlattenArrayTestRunner from "@/features/array-string-manipulation/flatten-array/components/FlattenArrayTestRunner";
 import data from "@/features/array-string-manipulation/flatten-array/data.json";
 
 interface TestCase {

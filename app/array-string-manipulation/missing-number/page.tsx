@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import MissingNumberChallengeContent from "@/features/array-string-manipulation/components/MissingNumberChallengeContent";
-import MissingNumberTestRunner from "@/features/array-string-manipulation/components/MissingNumberTestRunner";
+import MissingNumberChallengeContent from "@/features/array-string-manipulation/missing-number/components/MissingNumberChallengeContent";
+import MissingNumberTestRunner from "@/features/array-string-manipulation/missing-number/components/MissingNumberTestRunner";
 import data from "@/features/array-string-manipulation/missing-number/data.json";
 
 export default function MissingNumber() {

@@ -1,5 +1,5 @@
 import ExampleBox from "./ExampleBox";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 interface ExampleRowProps {
   input: string;

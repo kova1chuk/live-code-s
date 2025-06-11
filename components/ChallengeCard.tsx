@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 import DifficultyBadge from "@/components/DifficultyBadge";
 
 export interface ChallengeCardProps {

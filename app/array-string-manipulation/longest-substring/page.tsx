@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import LongestSubstringChallengeContent from "@/features/array-string-manipulation/components/LongestSubstringChallengeContent";
-import LongestSubstringTestRunner from "@/features/array-string-manipulation/components/LongestSubstringTestRunner";
+import LongestSubstringChallengeContent from "@/features/array-string-manipulation/longest-substring/components/LongestSubstringChallengeContent";
+import LongestSubstringTestRunner from "@/features/array-string-manipulation/longest-substring/components/LongestSubstringTestRunner";
 import data from "@/features/array-string-manipulation/longest-substring/data.json";
 
 export default function LongestSubstring() {

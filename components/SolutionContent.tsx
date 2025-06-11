@@ -1,6 +1,6 @@
 import React from "react";
-import CodeBlock from "@/components/CodeBlock";
-import InfoSection from "@/components/InfoSection";
+import CodeBlock from "@/components/ui/CodeBlock";
+import InfoSection from "@/components/ui/InfoSection";
 
 interface SolutionContentProps {
   howItWorks: string[];

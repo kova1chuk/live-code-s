@@ -1,9 +1,9 @@
 import React from "react";
-import CodeBlock from "@/components/CodeBlock";
-import InfoSection from "@/components/InfoSection";
+import CodeBlock from "@/components/ui/CodeBlock";
+import InfoSection from "@/components/ui/InfoSection";
 import SectionBox from "@/components/SectionBox";
 import ComplexityInfo from "@/components/ComplexityInfo";
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 
 interface Complexity {
   time: string;

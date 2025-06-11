@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Button from "@/components/Button";
-import Typography from "@/components/Typography";
+import Button from "@/components/ui/Button";
+import Typography from "@/components/ui/Typography";
 import TestCase from "./TestCase";
 import { BaseTestCase, TestResult, TestRunnerProps } from "./types";
 

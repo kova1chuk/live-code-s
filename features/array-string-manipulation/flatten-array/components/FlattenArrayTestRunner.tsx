@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Typography from "@/components/Typography";
-import Button from "@/components/Button";
+import Typography from "@/components/ui/Typography";
+import Button from "@/components/ui/Button";
 
 interface TestCase {
   input: (number | number[])[];

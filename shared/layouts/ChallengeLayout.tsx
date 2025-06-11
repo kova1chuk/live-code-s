@@ -1,6 +1,5 @@
 import React from "react";
-import Typography from "@/components/Typography";
-import Breadcrumb from "@/components/Breadcrumb";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import { usePathname } from "next/navigation";
 import { SECTION_CONFIGS } from "@/shared/config/challenges";
 
@@ -52,28 +51,11 @@ export default function ChallengeLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mt-8">
-          <Breadcrumb items={breadcrumbItems} />
-        </div>
-        <div className="my-16 flex flex-col items-center text-center">
-          <Typography
-            variant="h1"
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white"
-          >
-            {pageConfig.title}
-          </Typography>
-          {!challenge && (
-            <Typography className="mt-2 text-gray-600 dark:text-gray-300 max-w-3xl text-lg sm:text-xl">
-              {pageConfig.description}
-            </Typography>
-          )}
-        </div>
-        <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-          {children}
-        </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mt-8">
+        <Breadcrumb items={breadcrumbItems} />
       </div>
+      {children}
     </div>
   );
 }

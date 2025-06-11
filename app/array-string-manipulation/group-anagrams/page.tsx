@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import GroupAnagramsChallengeContent from "@/features/array-string-manipulation/components/GroupAnagramsChallengeContent";
-import GroupAnagramsTestRunner from "@/features/array-string-manipulation/components/GroupAnagramsTestRunner";
+import GroupAnagramsChallengeContent from "@/features/array-string-manipulation/group-anagrams/components/GroupAnagramsChallengeContent";
+import GroupAnagramsTestRunner from "@/features/array-string-manipulation/group-anagrams/components/GroupAnagramsTestRunner";
 import data from "@/features/array-string-manipulation/group-anagrams/data.json";
 
 interface TestCase {

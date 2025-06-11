@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 
-interface Tab {
+export interface Tab {
   id: string;
   label: string;
   content: React.ReactNode;

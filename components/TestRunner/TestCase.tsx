@@ -1,5 +1,5 @@
 import React from "react";
-import Typography from "@/components/Typography";
+import Typography from "@/components/ui/Typography";
 import { BaseTestCase, TestResult } from "./types";
 
 interface TestCaseProps<T extends BaseTestCase> {
