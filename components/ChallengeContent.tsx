@@ -1,59 +1,56 @@
+"use client";
+
 import React from "react";
 import Challenge from "@/components/Challenge";
+import type { Example, Solution, TestCase } from "@/types/challenge";
 
-interface Example {
-  input: string;
-  output: string;
+interface BaseTestRunnerProps {
+  testCases: TestCase[];
+  code: string;
+  onRunTests: () => void;
 }
 
-interface TestCase {
-  input: string;
-  expected: string;
-  description?: string;
-}
-
-interface Solution {
-  id: string;
-  label: string;
-  description: string;
-  complexity: { time: string; space: string };
-  howItWorks: string[];
-  advantages: string[];
-  disadvantages: string[];
-  jsCode: string;
-  tsCode: string;
-}
-
-interface ChallengeContentProps {
+interface ChallengeContentProps<
+  TestRunnerProps extends BaseTestRunnerProps = BaseTestRunnerProps
+> {
   title: string;
   description: string;
   examples: Example[];
   testCases: TestCase[];
   solutions: Solution[];
   initialCode: string;
-  onCodeChange: (code: string) => void;
-  TestRunner: React.ComponentType<{
-    testCases: TestCase[];
-    code: string;
-    onRunTests: () => void;
-  }>;
-  inputValue: string;
-  onInputChange: (value: string) => void;
-  onInputSubmit: (e: React.FormEvent) => void;
-  result: string | null;
-  onExampleClick: (example: Example) => void;
-  inputLabel?: string;
-  inputPlaceholder?: string;
-  submitButtonText?: string;
+  TestRunner?: React.ComponentType<TestRunnerProps>;
   customTestComponent?: React.ReactNode;
+  onCodeChange?: (code: string) => void;
+  onExampleClick?: (example: Example) => void;
 }
 
-export default function ChallengeContent(props: ChallengeContentProps) {
-  const { TestRunner, ...rest } = props;
+export default function ChallengeContent<
+  TestRunnerProps extends BaseTestRunnerProps = BaseTestRunnerProps
+>({
+  title,
+  description,
+  examples,
+  testCases,
+  solutions,
+  initialCode,
+  TestRunner,
+  customTestComponent,
+  onCodeChange,
+  onExampleClick,
+}: ChallengeContentProps<TestRunnerProps>) {
   return (
-    <Challenge
-      {...rest}
-      TestRunner={TestRunner as React.ComponentType<Record<string, unknown>>}
+    <Challenge<TestRunnerProps>
+      title={title}
+      description={description}
+      examples={examples}
+      testCases={testCases}
+      solutions={solutions}
+      initialCode={initialCode}
+      TestRunner={TestRunner}
+      customTestComponent={customTestComponent}
+      onCodeChange={onCodeChange}
+      onExampleClick={onExampleClick}
     />
   );
 }

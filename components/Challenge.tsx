@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Typography from "@/components/ui/Typography";
 import SectionBox from "@/components/SectionBox";
@@ -5,47 +7,43 @@ import TabsContent, { Tab } from "@/components/TabsContent";
 import CodeEditor from "@/components/ui/CodeEditor";
 import ExampleCard from "@/components/ExampleCard";
 import SolutionDetails from "@/components/SolutionDetails";
+import type { Example, Solution, TestCase } from "@/types/challenge";
 
-interface Example {
-  input: string;
-  output: string;
+interface BaseTestRunnerProps {
+  testCases: TestCase[];
+  code: string;
+  onRunTests: () => void;
 }
 
-interface Solution {
-  id: string;
-  label: string;
-  description: string;
-  complexity: { time: string; space: string };
-  howItWorks: string[];
-  advantages: string[];
-  disadvantages: string[];
-  jsCode: string;
-  tsCode: string;
-}
-
-interface ChallengeProps {
+interface ChallengeProps<
+  TestRunnerProps extends BaseTestRunnerProps = BaseTestRunnerProps
+> {
   title: string;
   description: string;
   examples: Example[];
+  testCases: TestCase[];
   solutions: Solution[];
   initialCode: string;
   onCodeChange?: (code: string) => void;
-  TestRunner?: React.ComponentType<Record<string, unknown>>;
-  onExampleClick: (example: Example) => void;
+  TestRunner?: React.ComponentType<TestRunnerProps>;
+  onExampleClick?: (example: Example) => void;
   customTestComponent?: React.ReactNode;
 }
 
-export default function Challenge({
+export default function Challenge<
+  TestRunnerProps extends BaseTestRunnerProps = BaseTestRunnerProps
+>({
   title,
   description,
   examples,
+  testCases,
   solutions,
   initialCode,
   onCodeChange,
   TestRunner,
   onExampleClick,
   customTestComponent,
-}: ChallengeProps) {
+}: ChallengeProps<TestRunnerProps>) {
   const solutionTabs: Tab[] = [
     ...solutions.map((solution) => ({
       id: solution.id,
@@ -79,7 +77,15 @@ export default function Challenge({
                     height="400px"
                   />
                 </div>
-                <TestRunner />
+                {TestRunner && (
+                  <TestRunner
+                    {...({
+                      testCases,
+                      code: initialCode,
+                      onRunTests: () => {},
+                    } as TestRunnerProps)}
+                  />
+                )}
               </div>
             ),
           },
@@ -112,7 +118,7 @@ export default function Challenge({
                   index={index}
                   input={example.input}
                   output={example.output}
-                  onTryClick={() => onExampleClick(example)}
+                  onTryClick={() => onExampleClick?.(example)}
                 />
               ))}
             </div>

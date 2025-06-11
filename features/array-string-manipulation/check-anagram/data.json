@@ -1,4 +1,6 @@
 {
+  "title": "Check Anagram",
+  "description": "Write a function that checks if two strings are anagrams of each other. An anagram is a word or phrase formed by rearranging the letters of another, using all the original letters exactly once. Ignore spaces, punctuation, and case.",
   "examples": [
     { "input": "listen, silent", "output": "true" },
     { "input": "hello, world", "output": "false" },
