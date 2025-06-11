@@ -11,32 +11,32 @@
   "initialCode": "function isAnagram(str1, str2) {\n  // Write your solution here\n  const normalize = str => \n    str.toLowerCase()\n       .replace(/[^a-z0-9]/g, '')\n       .split('')\n       .sort()\n       .join('');\n  return normalize(str1) === normalize(str2);\n}",
   "testCases": [
     {
-      "input": ["listen", "silent"],
+      "input": "listen, silent",
       "expected": true,
       "description": "Basic anagram test"
     },
     {
-      "input": ["hello", "world"],
+      "input": "hello, world",
       "expected": false,
       "description": "Non-anagram test"
     },
     {
-      "input": ["debit card", "bad credit"],
+      "input": "debit card, bad credit",
       "expected": true,
       "description": "Phrase with spaces"
     },
     {
-      "input": ["A gentleman", "Elegant man"],
+      "input": "A gentleman, Elegant man",
       "expected": true,
       "description": "Case-insensitive test"
     },
     {
-      "input": ["12345", "54321"],
+      "input": "12345, 54321",
       "expected": true,
       "description": "Numeric anagram"
     },
     {
-      "input": ["rail safety", "fairy tales"],
+      "input": "rail safety, fairy tales",
       "expected": true,
       "description": "Complex phrase test"
     }
