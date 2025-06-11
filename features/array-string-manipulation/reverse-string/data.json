@@ -1,4 +1,6 @@
 {
+  "title": "Reverse String",
+  "description": "Write a function that reverses a string. The input string is given as an array of characters. Do the reversal in-place, that is, modify the input array directly. Do not allocate extra space for another array.",
   "examples": [
     {
       "input": "hello",
