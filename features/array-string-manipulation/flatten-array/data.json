@@ -1,4 +1,6 @@
 {
+  "title": "Flatten Array",
+  "description": "Write a function that takes a nested array as input and returns a flattened version of that array. The function should handle arrays nested to any depth and preserve the order of elements.",
   "examples": [
     {
       "input": "[1, [2, 3], [4, [5, 6]]]",
