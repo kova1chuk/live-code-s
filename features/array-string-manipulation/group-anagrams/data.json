@@ -1,4 +1,6 @@
 {
+  "title": "Group Anagrams",
+  "description": "Write a function that groups anagrams together. Given an array of strings, group the strings that are anagrams of each other. The order of the groups and the order of strings within each group does not matter.",
   "examples": [
     {
       "input": "eat, tea, tan, ate, nat, bat",
