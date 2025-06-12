@@ -1,4 +1,6 @@
 {
+  "title": "Longest Substring Without Repeating Characters",
+  "description": "Given a string, write a function that finds the length of the longest substring without repeating characters. The function should return both the length of the substring and the substring itself. A substring is a contiguous sequence of characters within the string.",
   "examples": [
     {
       "input": "abcabcbb",
